@@ -250,6 +250,7 @@ vecSup = vecAlea[idxSup30]
 
 # Exercice 12
 Créer une matrice « A » de dimension 10 lignes x 10 colonnes telle que : A[i, i] = 2 ; A[i, i+1] = -1 ; A[i+1, i] = 1 ; le reste des valeurs = 0.
+*Indice : else if()*
 
 ```{r exercice12, echo=TRUE, eval=FALSE}
 
@@ -269,14 +270,90 @@ for (i in 1:10){
 }
 ```
 
-## Exercice 11 : boucle while et for
+# Exercice 13
+1. Créer une matrice « matrice » contenant des valeurs tirées aléatoirement de dimension 10 lignes x 10 colonnes et dont les éléments de la colonne j suivent une loi normale de moyenne nulle et de variance j2 (faire une boucle).
+2. Afficher nombre d’éléments positifs et négatifs de la matrice. Remplacer les nombre négatifs par 0.
+3. Afficher les « marges » de matrice (sommes des valeurs en lignes et en colonnes).
+*Indice : `apply`*
+
+```{r exercice13, echo=TRUE, eval=FALSE}
+#1
+matrice = matrix(0,nrow = 10, ncol=10)
+for (j in 1:10){
+  val = sample(x = rnorm(n=100, mean = 0, sd = j*2), size = 10)
+  matrice[,j] = val
+}
+
+#2
+nbPos = length(which(matrice > 0))
+idxNeg = which(matrice < 0)
+nbNeg = length(idxNeg)
+matrice[idxNeg] = 0
+
+#3
+apply(matrice, 1, sum)
+apply(matrice, 2, sum)
+```
+
+# Créer et utiliser ses propres fonctions R
+
+
+## Exercice 14
+
+1. Exécutez les commandes `data(iris)` puis `str(iris)`. Nous venons de charger en mémoire l'un des nombreux jeux de données distribués avec R ! Profitez de l'aide sur ce jeu de données pour en apprendre un peu plus sur les fleurs (`?iris`) ! Tous les jeux de données disponibles avec l'installation de base de R sont accessibles en tapant `data()`.
+
+2. Créez la fonction `moyenneET` suivante et décryptez la :
+```{r}
+moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
+```
+
+3. Afficher l'aide de la fonction `apply`. En utilisant cette fonction, calculez la moyenne et l'écart type des colonnes numériques du dataset `iris`. Comparer le résultat avec celui obtenu par la foncion `moyenneET`.
+
+*Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`. Par exemple
+
+```{r exercice14, echo = TRUE, eval = FALSE}
+#1
+data(iris)
+str(iris)
+moyenneET(2)
+
+#2
+moyenneET <- function(i) {
+  moy = mean(iris[,i])
+  et  = sd(iris[,i])
+  return( c(moy = moy, et = et) )
+}
+
+
+#3
+?apply
+moy = apply(iris[,c(1,2,3,4)], 2, mean)
+et  = apply(iris[,c(1,2,3,4)], 2, sd)
+moyenneET(1)
+moyenneET(2)
+moyenneET(3)
+moyenneET(4)
+```
+
+## Exercice 15
+
+Créer une fonction nommée « somme » qui calcule la somme de deux variables « x » et « y » passées en arguments.
+
+```{r exercice15, echo=TRUE, eval=FALSE}
+somme = function(x, y){
+  resultat = x+y
+  return(resultat)
+}
+```
+
+## Exercice 16 : fonction et boucle while
 
 1. Choisir un nombre mystère entre 1 et 100, et le stocker dans un objet que l’on nommera `nombre_mystere`. Ensuite, créer une boucle qui à chaque itération effectue un tirage aléatoire d’un entier compris entre 1 et 100. Tant que le nombre tiré est différent du nombre mystère, la boucle doit continuer. À
 la sortie de la boucle, une variable que l’on appellera `nb_tirages` contiendra le nombre de tirages réalisés pour obtenir le nombre mystère.
 2. Utiliser le code de la question précédente pour réaliser la fonction `trouver_nombre`, qui, lorsqu’on lui donne un nombre compris entre 1 et 100, retourne le nombre de tirages aléatoires d’entiers compris entre 1 et 100 nécessaires avant de tirer le nombre mystère.
 3. En utilisant une boucle for, faire appel 1000 fois à la fonction `trouver_nombre()` qui vient d’être créée. À chaque itération, stocker le résultat dans un élément d’un vecteur que l’on appellera `nb_essais_rep`. Enfin, afficher la moyenne du nombre de tirages nécessaires pour retrouver le nombre magique.
 
-```{r exercice11, echo = TRUE, eval = FALSE}
+```{r exercice16, echo = TRUE, eval = FALSE}
 # 1
 nombre_mystere = 59
 
@@ -314,49 +391,7 @@ for (i in seq(1000)){
 mean(tmp)
 ```
 
-
-
-## Exercice 7 : Création de fonction
-
-1. Exécutez les commandes `data(iris)` puis `str(iris)`. Nous venons de charger en mémoire l'un des nombreux jeux de données distribués avec R ! Profitez de l'aide sur ce jeu de données pour en apprendre un peu plus sur les fleurs (`?iris`) ! Tous les jeux de données disponibles avec l'installation de base de R sont accessibles en tapant `data()`.
-
-2. Créez la fonction `moyenneET` suivante et décryptez la :
-```{r}
-moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
-```
-
-3. Afficher l'aide de la fonction `apply`. En utilisant cette fonction, calculez la moyenne et l'écart type des colonnes numériques du dataset `iris`. Comparer le résultat avec celui obtenu par la foncion `moyenneET`.
-
-
-*Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`. Par exemple
-
-```{r exercice7, echo = TRUE, eval = FALSE}
-#1
-data(iris)
-str(iris)
-moyenneET(2)
-
-#2
-moyenneET <- function(i) {
-  moy = mean(iris[,i])
-  et  = sd(iris[,i])
-  return( c(moy = moy, et = et) )
-}
-
-
-#3
-?apply
-moy = apply(iris[,c(1,2,3,4)], 2, mean)
-et  = apply(iris[,c(1,2,3,4)], 2, sd)
-moyenneET(1)
-moyenneET(2)
-moyenneET(3)
-moyenneET(4)
-```
-
-
-
-# Exercice 10 : Création d’une fonction, traitement de chaînes de caractères
+# Exercice 17 : Création d’une fonction, traitement de chaînes de caractères
 
 Supposons que les adresses e-mails des étudiants de centralsupelec soient constituées de la manière suivante: le prénom et le nom de famille séparés par un point, le symbole arobase et enfin le nom de domaine. Supposons de plus que les étudiants ont un seul prénom, et aucune particule au nom de famille. La syntaxe des adresses e-mail est donc comme suit :
 
@@ -375,7 +410,7 @@ nom.prenom@etudiant.centralsupelec.fr.
 ```
 
 
-```{r exercice10, echo = TRUE, eval=FALSE}
+```{r exercice17, echo = TRUE, eval=FALSE}
 #1
 parseMail = function(email){
   nom_prenom = unlist(strsplit(email, "@"))[1]
@@ -396,10 +431,10 @@ for (m in emails){
 
 
 
-# Exercice 11 : Fonctions appliquées aux éléments d’une liste
+# Exercice 18 : Fonctions appliquées aux éléments d’une liste
 
 Soit une liste nommée twittos, disponible à l’adresse suivante :
-XXXXXXXXXXXXXX
+https://pf-bb.github.io/CentraleSupelec-R-genomics/
 
 Elle contient des informations fictives sur des utilisateurs de Twitter ; chaque élément de cette liste est une liste dont les éléments sont les suivants :
 
@@ -420,7 +455,7 @@ Elle contient des informations fictives sur des utilisateurs de Twitter ; chaque
 
 5. Quelle est la structure de l’objet `res` obtenu à la question précédente ?
 
-```{r exercice11, echo = TRUE, eval = FALSE}
+```{r exercice18, echo = TRUE, eval = FALSE}
 #1
 load("twittos.rda")
 
@@ -439,12 +474,12 @@ res = lapply(twittos, twittos_to_df)
 
 # Lire et sauvegarder des données
 
-## Exercice 12 : Lire les données d’un fichier : fonction `read.table`
+## Exercice 19 : Lire les données d’un fichier : fonction `read.table`
 
 Il est possible de lire les données stockées dans des fichiers sous format `txt` grâce, entre autres, aux fonctions
 suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs, la fonction `read.xls()` (resp. `write.xls()`) du package `gdata` fournit les outils pour lire (resp. écrire) des fichiers au format Excel.
 
-(Récupérer les fichiers demandés sur le site XXXXXXXXXXXXXXX)
+(Récupérer les fichiers demandés sur le site https://pf-bb.github.io/CentraleSupelec-R-genomics/)
 
 1. Importer dans une variable nommée `A` le jeu de données nommé `auto2004_original.txt`.
 2. Importer dans une variable nommée `B` le jeu de données `auto2004_sans_nom.txt`.
@@ -457,7 +492,7 @@ suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs
 *Indice : `help("read.table")`, `help("is.na")`*
 
 
-```{r exercice12, echo=TRUE, eval = FALSE}
+```{r exercice19, echo=TRUE, eval = FALSE}
 #1
 A = read.table(file="auto2004_original.txt", sep="\t", header = TRUE)
 
@@ -481,7 +516,7 @@ F = read.xls(xls ="bordeaux.xls", header = TRUE)
 class(E)
 ```
 
-## Exercice 13 : Enregistrer des données
+## Exercice 20 : Enregistrer des données
 
 Créer la matrice suivante :
 \[
@@ -502,7 +537,7 @@ Créer la matrice suivante :
 6. Que donne la commande `D = readRDS("matriceA.Rds")` ?
 7. Sauver toutes les variables dans un fichier nommés "données.Rdata"
   
-```{r exercice13, echo = TRUE, eval =FALSE}
+```{r exercice20, echo = TRUE, eval =FALSE}
 
 A = matrix(seq(12), ncol = 4, byrow = TRUE)
 
@@ -530,5 +565,9 @@ D = readRDS("matriceA.rds")
 #8
 save(list = ls(), "données.Rdata")
 ```
+
+
+
+
 
 
