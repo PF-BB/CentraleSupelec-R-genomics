@@ -27,7 +27,7 @@ Soit `a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")`
 * Essayer de faire a[1:3]. Qu'obtenez-vous ?
 * Essayer de supprimer les lannisters ?
 * Essayer de supprimer les lannisters et les greyjoy ?
-* Trier par ordre alphabetique. *indice : `sort`* ?
+* Trier par ordre alphabetique. *indice : `sort`* 
 
 ```{r exercice1, echo = TRUE, eval = FALSE }
 a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")
@@ -270,6 +270,24 @@ for (i in 1:10){
 }
 ```
 
+<<<<<<< HEAD
+## Exercice 13 : boucle while et for
+
+1. Choisir un nombre mystère entre 1 et 100, et le stocker dans un objet que l’on nommera `nombre_mystere`. Ensuite, créer une boucle qui à chaque itération effectue un tirage aléatoire d’un entier compris entre 1 et 100. Tant que le nombre tiré est différent du nombre mystère, la boucle doit continuer. À
+la sortie de la boucle, une variable que l’on appellera `nb_tirages` contiendra le nombre de tirages réalisés pour obtenir le nombre mystère.
+2. Utiliser le code de la question précédente pour réaliser la fonction `trouver_nombre`, qui, lorsqu’on lui donne un nombre compris entre 1 et 100, retourne le nombre de tirages aléatoires d’entiers compris entre 1 et 100 nécessaires avant de tirer le nombre mystère.
+3. En utilisant une boucle for, faire appel 1000 fois à la fonction `trouver_nombre()` qui vient d’être créée. À chaque itération, stocker le résultat dans un élément d’un vecteur que l’on appellera `nb_essais_rep`. Enfin, afficher la moyenne du nombre de tirages nécessaires pour retrouver le nombre magique.
+
+```{r exercice13, echo = TRUE, eval = FALSE}
+# 1
+nombre_mystere = 59
+
+s = 0
+nb_tirages = 0
+while (s != nombre_mystere){
+  s = sample(1:100, 1)
+  nb_tirages  = nb_tirages + 1
+=======
 # Exercice 13
 1. Créer une matrice « matrice » contenant des valeurs tirées aléatoirement de dimension 10 lignes x 10 colonnes et dont les éléments de la colonne j suivent une loi normale de moyenne nulle et de variance j2 (faire une boucle).
 2. Afficher nombre d’éléments positifs et négatifs de la matrice. Remplacer les nombre négatifs par 0.
@@ -282,6 +300,7 @@ matrice = matrix(0,nrow = 10, ncol=10)
 for (j in 1:10){
   val = sample(x = rnorm(n=100, mean = 0, sd = j*2), size = 10)
   matrice[,j] = val
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 }
 
 #2
@@ -298,7 +317,11 @@ apply(matrice, 2, sum)
 # Créer et utiliser ses propres fonctions R
 
 
+<<<<<<< HEAD
+## Exercice 14 : Création de fonction
+=======
 ## Exercice 14
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 1. Exécutez les commandes `data(iris)` puis `str(iris)`. Nous venons de charger en mémoire l'un des nombreux jeux de données distribués avec R ! Profitez de l'aide sur ce jeu de données pour en apprendre un peu plus sur les fleurs (`?iris`) ! Tous les jeux de données disponibles avec l'installation de base de R sont accessibles en tapant `data()`.
 
@@ -339,6 +362,9 @@ moyenneET(4)
 
 Créer une fonction nommée « somme » qui calcule la somme de deux variables « x » et « y » passées en arguments.
 
+<<<<<<< HEAD
+# Exercice 15 : Création d’une fonction, traitement de chaînes de caractères
+=======
 ```{r exercice15, echo=TRUE, eval=FALSE}
 somme = function(x, y){
   resultat = x+y
@@ -392,6 +418,7 @@ mean(tmp)
 ```
 
 # Exercice 17 : Création d’une fonction, traitement de chaînes de caractères
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 Supposons que les adresses e-mails des étudiants de centralsupelec soient constituées de la manière suivante: le prénom et le nom de famille séparés par un point, le symbole arobase et enfin le nom de domaine. Supposons de plus que les étudiants ont un seul prénom, et aucune particule au nom de famille. La syntaxe des adresses e-mail est donc comme suit :
 
@@ -402,7 +429,7 @@ nom.prenom@etudiant.centralsupelec.fr.
 
 *indice : `strsplit`*
 
-```{r exercice10mail, echo = TRUE, eval = FALSE}
+```{r exercice15mail, echo = TRUE, eval = FALSE}
   emails = c( "john.snow@etudiant.centralsupelec.fr",
               "patti.smith@etudiant.centralsupelec.fr",
               "rick.grimes@etudiant.centralsupelec.fr",
@@ -410,7 +437,11 @@ nom.prenom@etudiant.centralsupelec.fr.
 ```
 
 
+<<<<<<< HEAD
+```{r exercice15, echo = TRUE, eval=FALSE}
+=======
 ```{r exercice17, echo = TRUE, eval=FALSE}
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 #1
 parseMail = function(email){
   nom_prenom = unlist(strsplit(email, "@"))[1]
@@ -431,7 +462,11 @@ for (m in emails){
 
 
 
+<<<<<<< HEAD
+# Exercice 16 : Fonctions appliquées aux éléments d’une liste
+=======
 # Exercice 18 : Fonctions appliquées aux éléments d’une liste
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 Soit une liste nommée twittos, disponible à l’adresse suivante :
 https://pf-bb.github.io/CentraleSupelec-R-genomics/
@@ -455,7 +490,11 @@ Elle contient des informations fictives sur des utilisateurs de Twitter ; chaque
 
 5. Quelle est la structure de l’objet `res` obtenu à la question précédente ?
 
+<<<<<<< HEAD
+```{r exercice16, echo = TRUE, eval = FALSE}
+=======
 ```{r exercice18, echo = TRUE, eval = FALSE}
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 #1
 load("twittos.rda")
 
@@ -474,7 +513,11 @@ res = lapply(twittos, twittos_to_df)
 
 # Lire et sauvegarder des données
 
+<<<<<<< HEAD
+## Exercice 17 : Lire les données d’un fichier : fonction `read.table`
+=======
 ## Exercice 19 : Lire les données d’un fichier : fonction `read.table`
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 Il est possible de lire les données stockées dans des fichiers sous format `txt` grâce, entre autres, aux fonctions
 suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs, la fonction `read.xls()` (resp. `write.xls()`) du package `gdata` fournit les outils pour lire (resp. écrire) des fichiers au format Excel.
@@ -492,7 +535,11 @@ suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs
 *Indice : `help("read.table")`, `help("is.na")`*
 
 
+<<<<<<< HEAD
+```{r exercice17, echo=TRUE, eval = FALSE}
+=======
 ```{r exercice19, echo=TRUE, eval = FALSE}
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 #1
 A = read.table(file="auto2004_original.txt", sep="\t", header = TRUE)
 
@@ -516,7 +563,11 @@ F = read.xls(xls ="bordeaux.xls", header = TRUE)
 class(E)
 ```
 
+<<<<<<< HEAD
+## Exercice 18 : Enregistrer des données
+=======
 ## Exercice 20 : Enregistrer des données
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 Créer la matrice suivante :
 \[
@@ -537,7 +588,11 @@ Créer la matrice suivante :
 6. Que donne la commande `D = readRDS("matriceA.Rds")` ?
 7. Sauver toutes les variables dans un fichier nommés "données.Rdata"
   
+<<<<<<< HEAD
+```{r exercice18, echo = TRUE, eval =FALSE}
+=======
 ```{r exercice20, echo = TRUE, eval =FALSE}
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
 A = matrix(seq(12), ncol = 4, byrow = TRUE)
 
@@ -567,7 +622,113 @@ save(list = ls(), "données.Rdata")
 ```
 
 
+<<<<<<< HEAD
+# Graphiques
+
+## Exercice 20 : quelques graphique des base en R 
+
+1. Charger le jeu de données `iris`.
+2. Sur la colonne contenant des données qualitatives, réaliser une représentation en camembert (pie chart), puis en bâtons (barplot).
+3. Taper la ligne de commande suivante : 
+
+```{r exercice20.1, echo=TRUE, eval=FALSE}
+data(iris)
+summary(iris)
+```
+
+Quel résultat obtenez-vous ?
+
+4. Une représentation adéquate est la boîte à moustache (boxplot). Créer un boxplot pour les 4 variables numériques du jeu de données `iris`.
+5. Réaliser le même graphique en ajoutant un titre et en supprimant les valeurs extrêmes.
+6. Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
+7. Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
+8. Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :    * augmentant la taille des points
+   * remplaçant les points par des triangles de couleur rouge *Indice `pch` option*
+   * ajoutant une ligne horizontale en pointillé à y=1
+   * (question plus difficiel) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
+   
+Pour savoir comment se comporte les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs`.
+
+9. Utiliser la fonction `pairs` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
+10. Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
+
+```{r exercice20, echo=TRUE, eval=FALSE}
+#2
+pie(table(iris$Species))
+barplot(table(iris$Species))
+
+#4
+boxplot(iris[,1:4])
+
+#5
+boxplot(iris[,1:4], title="Iris Boxplot", outline=FALSE)
+
+#6
+par(mfrow=c(1,2))
+boxplot(iris[,1:4], title="Iris Boxplot", outline=FALSE)
+pie(table(iris$Species))
+
+#7
+plot(iris$Petal.Length, iris$Petal.Width)
+
+#8
+plot(iris$Petal.Length, iris$Petal.Width, cex=5)
+plot(iris$Petal.Length, iris$Petal.Width, pch=17, col="red")
+abline(h=1, lty=2)
+
+plot(iris$Petal.Length, iris$Petal.Width, pch=17, col=as.numeric(iris$Species))
+
+#9
+pairs(iris[,1:4], col=as.numeric(iris$Species), pch=16)
+
+#10
+pdf("pairs_iris.pdf")
+pairs(iris[,1:4], col=as.numeric(iris$Species), pch=16)
+dev.off()
+```
+
+
+## Exercice 21 : distribution et density plot
+
+1. Charger le jeu de données `airquality`.
+2. Prendre connaissance des donéess (dimension, type)
+3. Construire une histogramme de la variable `Ozone`. Représenter l'histogramme en terme de fréquence plutôt qu'en terme d'effectif (axe Y). Ajouter un titre, nommer les axes, et colorer les barres de l'histogramme en gris  et les traits de l'histogramme en bleu. Augmenter la taille  du pas de l'histogramme à 30.
+4. Regarder l'aide de la fonction `density()`. Appliquer cette fonction à la variable `Ozone`. Cela retourne-t-il une erreur ? Pourquoi ? Corriger la en spécifiant une option.
+5. Ajouter la courbe de densité précédemment générer à l'histogramme. *Indice `lines()`*
+
+```{r ,echo=TRUE, eval=FALSE}
+data(airquality)
+hist(airquality$Ozone)
+hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue")
+
+hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue",
+      breaks=30)
+
+d = density(airquality$Ozone, na.rm=TRUE)
+lines(d)
+
+```
+
+\newpage
+
+Pour aller plus loi, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
+
+```{r exo ggplo2, echp=TRUE, eval=FALSE}
+library(ggplot2)
+data(diamonds)
+
+# méthode classique
+layout(matrix(c(1:8,0), ncol=3, byrow = TRUE))
+for(i in levels(diamonds$clarity)){
+  hist(diamonds$price[diamonds$clarity==i], breaks=100, main= i, xlab="price", ylim=c(0,1500))
+}
+
+# méthode ggplot2
+ggplot(diamonds, aes(x=price)) + geom_histogram(binwidth=200) + facet_wrap(~ clarity)
+```
+=======
 
 
 
+>>>>>>> 541854946e6d99d313a33523d617740bb92bcc5b
 
