@@ -1,16 +1,14 @@
 ---
-title: "TP01 : Découverte de R - Exercices"
-author: 
-  - "Justine Guégan - j.guegan-ihu@icm-institute.org"
-  - "Guillaume Meurice - guillaume.meurice@gustaveroussy.fr"
+title: 'TP01 : Découverte de R - Exercices'
+author:
+- Justine Guégan - j.guegan-ihu@icm-institute.org
+- Guillaume Meurice - guillaume.meurice@gustaveroussy.fr
 date: "27 octobre 2016"
-output: pdf_document
-header-includes :
-  - \usepackage{nicefrac}
-  - \usepackage{graphicx}
-  - \newcommand{\cor}{cor}
-
-#bibliography: jour1.bib
+output: html_document
+header-includes:
+- \usepackage{nicefrac}
+- \usepackage{graphicx}
+- \newcommand{\cor}{cor}
 ---
 
 
@@ -567,11 +565,13 @@ save(list = ls(), "données.Rdata")
 ```
 
 
+# Fonctions graphiques
+
 ## Exercice 21 : quelques graphique des base en R 
 
-1. Charger le jeu de données `iris`.
-2. Sur la colonne contenant des données qualitatives, réaliser une représentation en camembert (pie chart), puis en bâtons (barplot).
-3. Taper la ligne de commande suivante : 
+* Charger le jeu de données `iris`.
+* Sur la colonne contenant des données qualitatives, réaliser une représentation en camembert (pie chart), puis en bâtons (barplot).
+* Taper la ligne de commande suivante : 
 
 ```{r exercice21.1, echo=TRUE, eval=FALSE}
 data(iris)
@@ -580,19 +580,20 @@ summary(iris)
 
 Quel résultat obtenez-vous ?
 
-4. Une représentation adéquate est la boîte à moustache (boxplot). Créer un boxplot pour les 4 variables numériques du jeu de données `iris`.
-5. Réaliser le même graphique en ajoutant un titre et en supprimant les valeurs extrêmes.
-6. Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
-7. Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
-8. Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :    * augmentant la taille des points
-   * remplaçant les points par des triangles de couleur rouge *Indice `pch` option*
+* Une représentation adéquate est la boîte à moustache (boxplot). Créer un boxplot pour les 4 variables numériques du jeu de données `iris`.
+* Réaliser le même graphique en ajoutant un titre et en supprimant les valeurs extrêmes.
+* Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
+* Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
+* Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :  
+   * augmentant la taille des points
+   * remplaçant les points par des triangles de couleur rouge _Indice `pch` option_
    * ajoutant une ligne horizontale en pointillé à y=1
-   * (question plus difficiel) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
+   * (question plus difficile) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
    
-Pour savoir comment se comporte les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs`.
+Pour savoir comment se comportent les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs`.
 
-9. Utiliser la fonction `pairs` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
-10. Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
+* Utiliser la fonction `pairs` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
+* Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
 
 ```{r exercice21, echo=TRUE, eval=FALSE}
 #2
@@ -633,8 +634,8 @@ dev.off()
 ## Exercice 22 : distribution et density plot
 
 1. Charger le jeu de données `airquality`.
-2. Prendre connaissance des donéess (dimension, type)
-3. Construire une histogramme de la variable `Ozone`. Représenter l'histogramme en terme de fréquence plutôt qu'en terme d'effectif (axe Y). Ajouter un titre, nommer les axes, et colorer les barres de l'histogramme en gris  et les traits de l'histogramme en bleu. Augmenter la taille  du pas de l'histogramme à 30.
+2. Prendre connaissance des donées (dimension, type).
+3. Construire un histogramme de la variable `Ozone`. Représenter l'histogramme en terme de probabilité de densité plutôt qu'en terme de fréquence (axe Y). Ajouter un titre, modifier le noms des axes, et colorer les barres de l'histogramme en gris  et les traits de l'histogramme en bleu. Augmenter la taille  du pas de l'histogramme à 30.
 4. Regarder l'aide de la fonction `density()`. Appliquer cette fonction à la variable `Ozone`. Cela retourne-t-il une erreur ? Pourquoi ? Corriger la en spécifiant une option.
 5. Ajouter la courbe de densité précédemment générer à l'histogramme. *Indice `lines()`*
 
@@ -651,9 +652,48 @@ lines(d)
 
 ```
 
+## exercice XX : James Bond autour du monde 
+
+R contient de nombreux packages nous permettant de faire des représentations graphiques de toutes sortes. Certains packages permettent de faire des représentations spatiales (`rgdal`, `sp`, `rgeos`,`cartography`). Conçu comme une boite à outil dédiée à la cartographie thématique, le package `cartography` est développé au sein de l’UMS RIATE (CNRS, CGET, Université Paris Diderot) par Nicolas Lambert et Timothée Giraud.
+
+Commencez par installer le package `cartograpgy` disponible sur le CRAN (via l'utilitaire  RStudio ou en ligne de commande).
+
+Nous allons construire une carte dont l'objectif sera de montrer le nombre de fois où 007 s'est rendu dans chaque pays.
+
+Pour cela, télécharger les données disponibles à l'adresse suivante : http://wukan.ums-riate.fr/bond/bondfiles.RData.
+
+Nous avons chargé 2 objets : 
+
+* Le data frame `BondVisits` contient 2 colonnes, l’identifiant des pays (ISO2) et le nombre de visites (n).
+* La liste `WorldCountries` : cette liste est une `SpatialPolygonsDataFrame` (spdf) contenant la carte de tous les pays du monde.
+
+1. Afficher la carte du monde grâce à la fonction `plot` avec l'arrière plan en gris. On voit que les marges de la figures sont trop grandes. Modifiez les pour maximiser l'espace pris par la map monde. Redessinez la map monde. *Indice `par()` option `mar`*
+2. Ajouter les cercles proportionnels correspondant aux nombres de visites dans chaque pays de 007, avec la couleur de votre choix et des bords blanc. Modifier le titre de la légende de "n" à "Nombres de visites".
+3. On veut à présent représenter le nombres de visites par des couches de couleurs différentes plutôt que par des symboles proportionnels. Quelle fonction doit-on utiliser ? Appliquer la fonction aux données. Le résultat obtenu vous parait-il correct ? 
+4. Regarder le contenu de l'objet `WorldCountries@data`. Construisez un nouveau dataframe contenant tous les pays et les nombres de visites (NA ou 0 si inconnu). Réessayez de créer le graphique de la question précédente. *Indice : pour créer le nouveau dataframe, la fonction `merge` peut vous être utile*
+
+```{r exercie XX, echo=TRUE, eval=FALSE}
+library(cartography)
+load((url("http://wukan.ums-riate.fr/bond/bondfiles.RData")))
+head(BondVisits)
+
+plot(WorldCountries, bg="gray")
+par(mar = c(0,0,1.2,0))
+plot(WorldCountries, bg="gray")
+propSymbolsLayer(spdf = WorldCountries, df = BondVisits, var="n", border="white", col="magenta3", legend.title.txt = "Nombres de visites")
+
+choroLayer(spdf = WorldCountries, df = BondVisits, var="n")
+
+BondVisits2 = merge(BondVisits, WorldCountries@data, by="ISO2", all.y=TRUE)
+
+choroLayer(spdf = WorldCountries, df = BondVisits2, var="n", legend.title.txt = "Nombre de visites")
+```
+
+
+
 \newpage
 
-Pour aller plus loi, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
+Pour aller plus loin, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
 
 ```{r exo ggplo2, echp=TRUE, eval=FALSE}
 library(ggplot2)
