@@ -667,7 +667,7 @@ Nous avons chargé 2 objets :
 * Le data frame `BondVisits` contient 2 colonnes, l’identifiant des pays (ISO2) et le nombre de visites (n).
 * La liste `WorldCountries` : cette liste est une `SpatialPolygonsDataFrame` (spdf) contenant la carte de tous les pays du monde.
 
-1. Afficher la carte du monde grâce à la fonction `plot` avec l'arrière plan en gris. On voit que les marges de la figures sont trop grandes. Modifiez les pour maximiser l'espace pris par la map monde. Redessinez la map monde. *Indice `par()` option `mar`*
+1. Afficher la carte du monde grâce à la fonction `plot`, qui prend en argument des données au format spdf, avec l'arrière plan en gris. On voit que les marges de la figures sont trop grandes. Modifiez les pour maximiser l'espace pris par la map monde. Redessinez la map monde. *Indice `par()` option `mar`*
 2. Ajouter les cercles proportionnels correspondant aux nombres de visites dans chaque pays de 007, avec la couleur de votre choix et des bords blanc. Modifier le titre de la légende de "n" à "Nombres de visites".
 3. On veut à présent représenter le nombres de visites par des couches de couleurs différentes plutôt que par des symboles proportionnels. Quelle fonction doit-on utiliser ? Appliquer la fonction aux données. Le résultat obtenu vous parait-il correct ? 
 4. Regarder le contenu de l'objet `WorldCountries@data`. Construisez un nouveau dataframe contenant tous les pays et les nombres de visites (NA ou 0 si inconnu). Réessayez de créer le graphique de la question précédente. *Indice : pour créer le nouveau dataframe, la fonction `merge` peut vous être utile*
