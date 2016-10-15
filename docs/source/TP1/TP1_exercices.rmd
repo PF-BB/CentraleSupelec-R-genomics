@@ -567,6 +567,107 @@ save(list = ls(), "données.Rdata")
 ```
 
 
+## Exercice 21 : quelques graphique des base en R 
+
+1. Charger le jeu de données `iris`.
+2. Sur la colonne contenant des données qualitatives, réaliser une représentation en camembert (pie chart), puis en bâtons (barplot).
+3. Taper la ligne de commande suivante : 
+
+```{r exercice21.1, echo=TRUE, eval=FALSE}
+data(iris)
+summary(iris)
+```
+
+Quel résultat obtenez-vous ?
+
+4. Une représentation adéquate est la boîte à moustache (boxplot). Créer un boxplot pour les 4 variables numériques du jeu de données `iris`.
+5. Réaliser le même graphique en ajoutant un titre et en supprimant les valeurs extrêmes.
+6. Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
+7. Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
+8. Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :    * augmentant la taille des points
+   * remplaçant les points par des triangles de couleur rouge *Indice `pch` option*
+   * ajoutant une ligne horizontale en pointillé à y=1
+   * (question plus difficiel) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
+   
+Pour savoir comment se comporte les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs`.
+
+9. Utiliser la fonction `pairs` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
+10. Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
+
+```{r exercice21, echo=TRUE, eval=FALSE}
+#2
+pie(table(iris$Species))
+barplot(table(iris$Species))
+
+#4
+boxplot(iris[,1:4])
+
+#5
+boxplot(iris[,1:4], title="Iris Boxplot", outline=FALSE)
+
+#6
+par(mfrow=c(1,2))
+boxplot(iris[,1:4], title="Iris Boxplot", outline=FALSE)
+pie(table(iris$Species))
+
+#7
+plot(iris$Petal.Length, iris$Petal.Width)
+
+#8
+plot(iris$Petal.Length, iris$Petal.Width, cex=5)
+plot(iris$Petal.Length, iris$Petal.Width, pch=17, col="red")
+abline(h=1, lty=2)
+
+plot(iris$Petal.Length, iris$Petal.Width, pch=17, col=as.numeric(iris$Species))
+
+#9
+pairs(iris[,1:4], col=as.numeric(iris$Species), pch=16)
+
+#10
+pdf("pairs_iris.pdf")
+pairs(iris[,1:4], col=as.numeric(iris$Species), pch=16)
+dev.off()
+```
+
+
+## Exercice 22 : distribution et density plot
+
+1. Charger le jeu de données `airquality`.
+2. Prendre connaissance des donéess (dimension, type)
+3. Construire une histogramme de la variable `Ozone`. Représenter l'histogramme en terme de fréquence plutôt qu'en terme d'effectif (axe Y). Ajouter un titre, nommer les axes, et colorer les barres de l'histogramme en gris  et les traits de l'histogramme en bleu. Augmenter la taille  du pas de l'histogramme à 30.
+4. Regarder l'aide de la fonction `density()`. Appliquer cette fonction à la variable `Ozone`. Cela retourne-t-il une erreur ? Pourquoi ? Corriger la en spécifiant une option.
+5. Ajouter la courbe de densité précédemment générer à l'histogramme. *Indice `lines()`*
+
+```{r exercice22,echo=TRUE, eval=FALSE}
+data(airquality)
+hist(airquality$Ozone)
+hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue")
+
+hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue",
+      breaks=30)
+
+d = density(airquality$Ozone, na.rm=TRUE)
+lines(d)
+
+```
+
+\newpage
+
+Pour aller plus loi, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
+
+```{r exo ggplo2, echp=TRUE, eval=FALSE}
+library(ggplot2)
+data(diamonds)
+
+# méthode classique
+layout(matrix(c(1:8,0), ncol=3, byrow = TRUE))
+for(i in levels(diamonds$clarity)){
+  hist(diamonds$price[diamonds$clarity==i], breaks=100, main= i, xlab="price", ylim=c(0,1500))
+}
+
+# méthode ggplot2
+ggplot(diamonds, aes(x=price)) + geom_histogram(binwidth=200) + facet_wrap(~ clarity)
+```
 
 
 
