@@ -4,7 +4,7 @@ author:
 - Justine Guégan - j.guegan-ihu@icm-institute.org
 - Guillaume Meurice - guillaume.meurice@gustaveroussy.fr
 date: "27 octobre 2016"
-output: html_document
+output: pdf_document
 header-includes:
 - \usepackage{nicefrac}
 - \usepackage{graphicx}
