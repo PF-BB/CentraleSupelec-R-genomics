@@ -585,17 +585,18 @@ Quel résultat obtenez-vous ?
 * Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
 * Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
 * Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :  
+  
    * augmentant la taille des points
    * remplaçant les points par des triangles de couleur rouge _Indice `pch` option_
    * ajoutant une ligne horizontale en pointillé à y=1
    * (question plus difficile) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
    
-Pour savoir comment se comportent les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs`.
+Pour savoir comment se comportent les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs()`.
 
-* Utiliser la fonction `pairs` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
+* Utiliser la fonction `pairs()` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
 * Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
 
-```{r exercice21, echo=TRUE, eval=FALSE}
+```{r exercice21.2, echo=TRUE, eval=FALSE}
 #2
 pie(table(iris$Species))
 barplot(table(iris$Species))
@@ -652,7 +653,113 @@ lines(d)
 
 ```
 
-## exercice XX : James Bond autour du monde 
+## Exercice 23
+
+Les données « old faithful geyser » ont été collectées dans le cadre d’une étude du temps d’attente entre deux éruptions et la durée des éruptions au sein du parc National de Yellowstone (USA). Ce jeu de données est disponible sous R et est nommé `faithful` (package datasets). Le seuil critique d’attente au delà duquel la probabilité que la prochaine éruption soit longue et forte est fixé à 63.
+1. Télécharger et visualiser le jeu de données (fonction `plot( )`), en affichant également la limite des 63 secondes.
+2. Calculer un vecteur `vec` de 100000 points correspondant à la loi normale de moyenne `m` et d'éacrt type `sd` correspondant à la moyenne, et à l'écart type, des durées d'éruption
+3. Construire un histogramme de la durée d’éruption. Représenter l’histogramme en terme de densité plutôt qu’en termes d’effectifs (axe Y). Ajouter un titre, nommer les axes et colorer les barres de l’histogramme en vert et les traits de l’histogramme en rouge. Augmenter la taille du pas de l’histogramme à 20.
+4. Ajouter la densité du vecteur de point `vec` à l'histogramme (*Indice : `lines()`, `density()`*. Que remarquez-vous ?
+5. Utiliser la fonction `layout` pour afficher un scatter plot
+
+```{r exercice23, echo=TRUE, eval=FALSE}
+#1 
+data(faithful)
+?faithful
+plot(faithful$waiting, faithful$eruptions)
+abline(v=63, col="red")
+
+#2
+vec = rnorm(100000, mean = mean(faithful$eruptions), sd = sd(faithful$eruptions))
+
+#3 
+hist(faithful$eruptions, freq = FALSE, main = "Histogramme de la durée des eruptions", xlab = "Durée de l'eruption", ylab = "Densité", col="green", border = "red", breaks = 20)
+
+#4 
+lines(density(vec))
+
+#5
+## set up layout and graphical parameters
+layMat <- matrix(c(2,0,1,3), ncol=2, byrow=TRUE)
+layout(layMat, widths=c(5/7, 2/7), heights=c(2/7, 5/7))
+layout.show(n=3)
+
+# ospc = 0.5 # outer space
+# pext = 4 # par extension down and to the left
+# bspc = 1 # space between scatter plot and bar plots
+# par. = par(mar=c(pext, pext, bspc, bspc), oma=rep(ospc, 4)) # plot parameters
+
+ ## scatter plot
+plot(faithful, xlim=range(faithful$eruptions), ylim=range(faithful$waiting))
+
+## determine barplot and height parameter
+## histogram (for barplot-ting the density)
+lhist = 20
+num.dnorm = 5 * lhist
+
+xhist = hist(faithful$eruptions, plot=FALSE, breaks=lhist)
+yhist = hist(faithful$waiting  , plot=FALSE, breaks=lhist)
+barplot(xhist$density, axes=FALSE, ylim=c(0, max(xhist$density, xy)),space=0) 
+barplot(yhist$density, axes=FALSE, xlim=c(0, max(yhist$density, yy)),space=0, horiz=TRUE)
+
+
+# # evaluation points for the overlaid density
+# xx <- seq(min(faithful$eruptions), max(faithful$eruptions), length.out=num.dnorm)
+# yx <- seq(min(faithful$waiting)  , max(faithful$waiting)  , length.out=num.dnorm)
+# 
+# # density points
+# xy <- dnorm(xx, mean=mean(faithful$eruptions), sd=sd(faithful$eruptions))
+# yy <- dnorm(yx, mean=mean(faithful$waiting)  , sd=sd(faithful$waiting))
+# 
+# par(mar=c(0, pext, 0, 0))
+# 
+# # barplot pour "eruption"
+# barplot(xhist$density, axes=FALSE, ylim=c(0, max(xhist$density, xy)),space=0) 
+# # line pour "eruption"
+# lines(seq(from=0, to=lhist-1, length.out=num.dnorm), xy, col="blue") 
+# 
+# # barplot pour "waiting"
+# barplot(yhist$density, axes=FALSE, xlim=c(0, max(yhist$density, yy)),space=0, horiz=TRUE)
+# # line pour "waiting"
+# lines(yy, seq(from=0, to=lhist-1, length.out=num.dnorm), col="blue")
+```
+
+
+## Exercice 24
+Un ami vous propose le jeu suivant. On lance un dé. Si le résultat est 5 ou 6, on gagne 3 €, si le résultat est 4 on gagne 1 € et si c'est 3 ou moins on perd 2.5€. Avant d'accepter la partie, vous essayez de simuler ce jeu, pour voir si vous avez des chances de vous enrichir. 
+1. creer une fonction `simul` qui prend comme argument un entier compris entre 1 et 6, et qui retourne la somme correspondante.
+2. creer un vecteur `tirage`, simulant le resultat de 1000 tirages de dès.
+3. Afficher sur un graphique la simulation du jeu.
+Conclusion ?
+
+```{r exercice24, echo=TRUE, eval=FALSE}
+
+#1
+simul = function(i){
+  res = NULL
+  if (i <= 6 && i >= 1){
+    res = switch(i, -2.5, -2.5, -2.5, 1, 3, 3)
+  } 
+  else {
+    warning("Un tirage de dès en peut donner qu'un chiffre entre 1 et 6")
+  }
+  return(res)
+}
+
+#2
+tirage = sample(x = c(1:6),size = 1000, replace = TRUE )
+
+#3
+resultat = sapply(tirage, simul)
+gain = cumsum(resultat)
+plot(gain)
+
+```
+
+
+
+
+## exercice 25 : James Bond autour du monde 
 
 R contient de nombreux packages nous permettant de faire des représentations graphiques de toutes sortes. Certains packages permettent de faire des représentations spatiales (`rgdal`, `sp`, `rgeos`,`cartography`). Conçu comme une boite à outil dédiée à la cartographie thématique, le package `cartography` est développé au sein de l’UMS RIATE (CNRS, CGET, Université Paris Diderot) par Nicolas Lambert et Timothée Giraud.
 
@@ -672,7 +779,7 @@ Nous avons chargé 2 objets :
 3. On veut à présent représenter le nombres de visites par des couches de couleurs différentes plutôt que par des symboles proportionnels. Quelle fonction doit-on utiliser ? Appliquer la fonction aux données. Le résultat obtenu vous parait-il correct ? 
 4. Regarder le contenu de l'objet `WorldCountries@data`. Construisez un nouveau dataframe contenant tous les pays et les nombres de visites (NA ou 0 si inconnu). Réessayez de créer le graphique de la question précédente. *Indice : pour créer le nouveau dataframe, la fonction `merge` peut vous être utile*
 
-```{r exercie XX, echo=TRUE, eval=FALSE}
+```{r exercice25, echo=TRUE, eval=FALSE}
 library(cartography)
 load((url("http://wukan.ums-riate.fr/bond/bondfiles.RData")))
 head(BondVisits)
@@ -690,8 +797,6 @@ choroLayer(spdf = WorldCountries, df = BondVisits2, var="n", legend.title.txt = 
 ```
 
 
-
-\newpage
 
 Pour aller plus loin, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
 
