@@ -3,7 +3,6 @@ Introduction aux analyses génomiques avec R
 
 Ce cours a pour but de vous apprendre à manipuler des données de génomique avec l'outil R. Il se déroulera en 4 sessions de TD/TP : 
 
-TOTO
 
 ===============   =====================================================================
 Date		      Description

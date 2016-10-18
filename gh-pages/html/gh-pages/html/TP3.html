@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction aux analyses génomiques avec R &mdash; documentation R - Génomique </title>
+  <title>TP3 &mdash; documentation R - Génomique </title>
   
 
   
@@ -33,8 +33,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Recherche" href="search.html"/>
-    <link rel="top" title="documentation R - Génomique " href="#"/>
-        <link rel="next" title="TP1" href="TP1.html"/> 
+    <link rel="top" title="documentation R - Génomique " href="index.html"/>
+        <link rel="next" title="TP4" href="TP4.html"/>
+        <link rel="prev" title="TP2" href="TP2.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -52,7 +53,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> R - Génomique
+            <a href="index.html" class="icon icon-home"> R - Génomique
           
 
           
@@ -79,10 +80,10 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="TP1.html">TP1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TP2.html">TP2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TP3.html">TP3</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TP3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TP4.html">TP4</a></li>
 <li class="toctree-l1"><a class="reference internal" href="liensutiles.html">Liens utiles</a></li>
 </ul>
@@ -98,7 +99,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">R - Génomique</a>
+        <a href="index.html">R - Génomique</a>
       </nav>
 
 
@@ -113,13 +114,13 @@
 
 <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
+    <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Introduction aux analyses génomiques avec R</li>
+    <li>TP3</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/TP3.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -129,50 +130,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introduction-aux-analyses-genomiques-avec-r">
-<h1>Introduction aux analyses génomiques avec R<a class="headerlink" href="#introduction-aux-analyses-genomiques-avec-r" title="Lien permanent vers ce titre">¶</a></h1>
-<p>Ce cours a pour but de vous apprendre à manipuler des données de génomique avec l&#8217;outil R. Il se déroulera en 4 sessions de TD/TP :</p>
-<p>TOTO</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="18%" />
-<col width="82%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Date</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Jour 1 (27 oct)</td>
-<td>Commandes de base en R, Charger et sauvegarder des données, graphiques</td>
-</tr>
-<tr class="row-odd"><td>Jour 1 (17 nov)</td>
-<td>Commandes de base en R, Charger et sauvegarder des données, graphiques</td>
-</tr>
-<tr class="row-even"><td>Jour 2 (24 nov)</td>
-<td>RNA-seq : lire des données d&#8217;expression, représentations graphiques</td>
-</tr>
-<tr class="row-odd"><td>Jour 3 (8 déc)</td>
-<td>RNA-seq : analyse différentielle</td>
-</tr>
-<tr class="row-even"><td>Jour 4 (15 déc)</td>
-<td>RNA-seq : analyses d&#8217;enrichissement</td>
-</tr>
-</tbody>
-</table>
-<div class="section" id="table-des-matieres">
-<h2>Table des matières<a class="headerlink" href="#table-des-matieres" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="TP1.html">TP1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TP2.html">TP2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TP3.html">TP3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="TP4.html">TP4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="liensutiles.html">Liens utiles</a></li>
+  <div class="section" id="tp3">
+<h1>TP3<a class="headerlink" href="#tp3" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Durant cette session, nous allons continuer de travailler sur le même jeu de données, à savoir des données RNA-seq issues de tissus de cancer du sein de 3 types.</p>
+<p>Nous allons à présent effectuer l&#8217;analyse différentielle. Cette étape permet de sélectionner des gènes up-régulés ou down-régulés dans une situation par rapport à une autre.</p>
+<p>Pour cela, de nombreux packages existent dans Bioconductor : <a class="reference external" href="http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.pdf">DESeq2</a>, <a class="reference external" href="http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf">egdeR</a>, <a class="reference external" href="http://bioconductor.org/packages/release/bioc/vignettes/limma/inst/doc/usersguide.pdf">limma</a> et bien d&#8217;autres.</p>
+<ul class="simple">
+<li>Rappel de données, introduction à l&#8217;analyse différentielle :   <code class="xref download docutils literal"><span class="pre">slides</span></code></li>
+<li>Exercices :   <code class="xref download docutils literal"><span class="pre">exercices</span></code></li>
+<li>Données à télécharger :  <code class="xref download docutils literal"><span class="pre">TP3_data.zip</span></code></li>
 </ul>
-</div>
-</div>
 </div>
 
 
@@ -182,8 +149,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="TP1.html" class="btn btn-neutral float-right" title="TP1" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="TP4.html" class="btn btn-neutral float-right" title="TP4" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="TP2.html" class="btn btn-neutral" title="TP2" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
