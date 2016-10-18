@@ -27,7 +27,7 @@ Soit `a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")`
 * Essayer de supprimer les lannisters et les greyjoy ?
 * Trier par ordre alphabetique. *indice : `sort`* ?
 
-```{r exercice1, echo = TRUE, eval = FALSE }
+```{r exercice1, echo = FALSE, eval = FALSE }
 a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")
 a[1:3]
 a[-1]
@@ -43,7 +43,7 @@ sort(a)
 
 *Indice: `seq`.*
 
-```{r exercice2, echo = TRUE, eval = FALSE}
+```{r exercice2, echo = FALSE, eval = FALSE}
 a = c(1:100)
 b = seq(from = 2, to = 100, by = 2)
 c = a[-b]
@@ -56,7 +56,7 @@ c = a[-b]
 3. Créer le vecteur « vec3 » contenant une fois la lettre A, deux fois la lettre B, trois fois la lettre C ... et 26 fois la lettre Z. Quelle est la longueur de cette suite ?
 *Indice: `LETTERS`; `length()`; `rep()`*
 
-```{r exercice3, echo = TRUE, eval = FALSE}
+```{r exercice3, echo = FALSE, eval = FALSE}
 #1
 vec1 = seq(from=2, to=50, by=2 )
 
@@ -73,7 +73,7 @@ length(vec3)
 Créer le vecteur « vec4 » contenant les noms suivants : « individu1 », « individu2 », ... , « individu100 ».
 *Indice : `paste()`*
 
-```{r exercice4, echo = TRUE, eval = FALSE}
+```{r exercice4, echo = FALSE, eval = FALSE}
 
 vec4 = paste("individuc", 1:100, sep="")
 
@@ -87,7 +87,7 @@ vec4 = paste("individuc", 1:100, sep="")
 3. Que permet de faire la fonction `table` ? Appliquez la à `fac`.
 4. Quels sonts les modalités de ce facteurs ? *indice : `levels`*
 
-```{r exercice5, echo = TRUE, eval = FALSE}
+```{r exercice5, echo = FALSE, eval = FALSE}
 fac = factor(c("a","b","b","b","a","b","a","a"))
 length(which(fac == "a"))
 length(which(fac == "b"))
@@ -104,7 +104,7 @@ levels(fac)
 5. Les commandes `A[1:5, ]` et `B[, 1:5]` permettent de récuperer respectivement les 5 premières lignes de `A` et les 5 dernières colonnes de `B`. Inspirez-vous de ces commandes pour récupérez les lignes de 1 de `A` et les colonnes de 0 de `B`.
 6. Extrayez les `2` de la matrice `M`.
 
-```{r exercice6, echo = TRUE, eval = FALSE}
+```{r exercice6, echo = FALSE, eval = FALSE}
 #1
 a = rep(0:1, 50)
 
@@ -134,7 +134,7 @@ M2    = which(M==2)
 4. Rajoutez à la liste `x` un vecteur `alphabet` contenant les lettres de l'alphabet. *indice : `letters`*
 5. Essayez de transformer de nouveau `x` en `data.frame`. Que se passe-t-il ?
 
-````{r exercice7, echo = TRUE, eval = FALSE}
+````{r exercice7, echo = FALSE, eval = FALSE}
 #1
 x = list(
   a = rnorm(10),
@@ -167,7 +167,7 @@ as.data.frame(x)
 2. Créer une boucle qui affiche l'indice « i » de l’itération en cours (10 itérations)
 3. A l'aide d'une boucle, calculez la somme des entiers pairs compris entre 1 et 100.
 
-```{r exercice8, echo = TRUE, eval = FALSE }
+```{r exercice8, echo = FALSE, eval = FALSE }
 #1
 help("for")
 
@@ -190,7 +190,7 @@ somme
 2. Utilisez les structures `if` et `else` pour créer un programme qui prend en entrée un réel $x$ et qui lui associe $y=x^2$ si $x$ est positif et $y=x^3$ si $x$ est négatif.
 3. Utilisez les structures `if` et `else` pour créer un programme qui imprime à l'écran, pour chaque entier relatif $i$ compris entre -10 et 10, $i^3$ si $i<=0$, ou $i^2$ si $i>0$. 
 
-```{r exercice9, echo = TRUE, eval = FALSE }
+```{r exercice9, echo = FALSE, eval = FALSE }
 #1
 help("if")
 
@@ -218,25 +218,25 @@ for (i in -10:10){
 }
 ```
 
-## Exercice 10
+## Exercice 10 : utilisations des comparateurs
 
 Créer le vecteur « vecPasMultiples » contenant tous les nombres de 1 à 100 qui ne sont pas des multiples de 5.
 *Indice : `%%`*
 
-```{r exercice10, echo=TRUE, eval=FALSE}
+```{r exercice10, echo=FALSE, eval=FALSE}
 vec = 1:100
 mod = vec %%5
 idx = which(mod != 0)
 vecPasMultiples = vec[idx]
 ```
 
-# Exercice 11
+# Exercice 11 : utilisations des comparateurs
 
 1. Créer un vecteur `vecAlea` de 100 valeurs tirées aléatoirement selon une loi normale de moyenne 4 et d’écart type 5.
 2. Donner les indices des valeurs supérieures à 3, puis récupérer ces valeurs dans le vecteur `vecSup`. 
 *Indice : `rnorm`, `sample`*
 
-```{r exercice11, echo=TRUE, eval=FALSE}
+```{r exercice11, echo = FALSE, eval=FALSE}
 #1
 vecAlea = sample(x = rnorm(n=100, mean = 4, sd = 5), size = 100)
 
@@ -246,11 +246,11 @@ vecSup = vecAlea[idxSup30]
 
 ```
 
-# Exercice 12
+# Exercice 12 : else ...if 
 Créer une matrice « A » de dimension 10 lignes x 10 colonnes telle que : A[i, i] = 2 ; A[i, i+1] = -1 ; A[i+1, i] = 1 ; le reste des valeurs = 0.
 *Indice : else if()*
 
-```{r exercice12, echo=TRUE, eval=FALSE}
+```{r exercice12, echo = FALSE, eval=FALSE}
 
 A = matrix(0,nrow = 10, ncol=10)
 for (i in 1:10){
@@ -268,13 +268,14 @@ for (i in 1:10){
 }
 ```
 
-# Exercice 13
+# Exercice 13 : un moyen plus rapide de faire des boucles en R !
+
 1. Créer une matrice « matrice » contenant des valeurs tirées aléatoirement de dimension 10 lignes x 10 colonnes et dont les éléments de la colonne j suivent une loi normale de moyenne nulle et de variance j2 (faire une boucle).
 2. Afficher nombre d’éléments positifs et négatifs de la matrice. Remplacer les nombre négatifs par 0.
 3. Afficher les « marges » de matrice (sommes des valeurs en lignes et en colonnes).
 *Indice : `apply`*
 
-```{r exercice13, echo=TRUE, eval=FALSE}
+```{r exercice13, echo = FALSE, eval=FALSE}
 #1
 matrice = matrix(0,nrow = 10, ncol=10)
 for (j in 1:10){
@@ -296,12 +297,12 @@ apply(matrice, 2, sum)
 # Créer et utiliser ses propres fonctions R
 
 
-## Exercice 14
+## Exercice 14 : notre première fonction
 
 1. Exécutez les commandes `data(iris)` puis `str(iris)`. Nous venons de charger en mémoire l'un des nombreux jeux de données distribués avec R ! Profitez de l'aide sur ce jeu de données pour en apprendre un peu plus sur les fleurs (`?iris`) ! Tous les jeux de données disponibles avec l'installation de base de R sont accessibles en tapant `data()`.
 
 2. Créez la fonction `moyenneET` suivante et décryptez la :
-```{r}
+```{r, echo = TRUE}
 moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
 ```
 
@@ -309,7 +310,7 @@ moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
 
 *Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`. Par exemple
 
-```{r exercice14, echo = TRUE, eval = FALSE}
+```{r exercice14, echo = FALSE, eval = FALSE}
 #1
 data(iris)
 str(iris)
@@ -333,11 +334,11 @@ moyenneET(3)
 moyenneET(4)
 ```
 
-## Exercice 15
+## Exercice 15 : une autre fonction toute simple
 
 Créer une fonction nommée « somme » qui calcule la somme de deux variables « x » et « y » passées en arguments.
 
-```{r exercice15, echo=TRUE, eval=FALSE}
+```{r exercice15, echo = FALSE, eval=FALSE}
 somme = function(x, y){
   resultat = x+y
   return(resultat)
@@ -351,7 +352,7 @@ la sortie de la boucle, une variable que l’on appellera `nb_tirages` contiendr
 2. Utiliser le code de la question précédente pour réaliser la fonction `trouver_nombre`, qui, lorsqu’on lui donne un nombre compris entre 1 et 100, retourne le nombre de tirages aléatoires d’entiers compris entre 1 et 100 nécessaires avant de tirer le nombre mystère.
 3. En utilisant une boucle for, faire appel 1000 fois à la fonction `trouver_nombre()` qui vient d’être créée. À chaque itération, stocker le résultat dans un élément d’un vecteur que l’on appellera `nb_essais_rep`. Enfin, afficher la moyenne du nombre de tirages nécessaires pour retrouver le nombre magique.
 
-```{r exercice16, echo = TRUE, eval = FALSE}
+```{r exercice16, echo = FALSE, eval = FALSE}
 # 1
 nombre_mystere = 59
 
@@ -400,7 +401,7 @@ nom.prenom@etudiant.centralsupelec.fr.
 
 *indice : `strsplit`*
 
-```{r exercice10mail, echo = TRUE, eval = FALSE}
+```{r exercice17mail, echo = TRUE, eval = FALSE}
   emails = c( "john.snow@etudiant.centralsupelec.fr",
               "patti.smith@etudiant.centralsupelec.fr",
               "rick.grimes@etudiant.centralsupelec.fr",
@@ -408,7 +409,7 @@ nom.prenom@etudiant.centralsupelec.fr.
 ```
 
 
-```{r exercice17, echo = TRUE, eval=FALSE}
+```{r exercice17, echo = FALSE, eval=FALSE}
 #1
 parseMail = function(email){
   nom_prenom = unlist(strsplit(email, "@"))[1]
@@ -453,7 +454,7 @@ Elle contient des informations fictives sur des utilisateurs de Twitter ; chaque
 
 5. Quelle est la structure de l’objet `res` obtenu à la question précédente ?
 
-```{r exercice18, echo = TRUE, eval = FALSE}
+```{r exercice18, echo = FALSE, eval = FALSE}
 #1
 load("twittos.rda")
 
@@ -490,7 +491,7 @@ suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs
 *Indice : `help("read.table")`, `help("is.na")`*
 
 
-```{r exercice19, echo=TRUE, eval = FALSE}
+```{r exercice19, echo = FALSE, eval = FALSE}
 #1
 A = read.table(file="auto2004_original.txt", sep="\t", header = TRUE)
 
@@ -535,7 +536,7 @@ Créer la matrice suivante :
 6. Que donne la commande `D = readRDS("matriceA.Rds")` ?
 7. Sauver toutes les variables dans un fichier nommés "données.Rdata"
   
-```{r exercice20, echo = TRUE, eval =FALSE}
+```{r exercice20, echo = FALSE, eval =FALSE}
 
 A = matrix(seq(12), ncol = 4, byrow = TRUE)
 
@@ -567,13 +568,13 @@ save(list = ls(), "données.Rdata")
 
 # Fonctions graphiques
 
-## Exercice 21 : quelques graphique des base en R 
+## Exercice 21 : quelques graphiques des base en R 
 
 * Charger le jeu de données `iris`.
 * Sur la colonne contenant des données qualitatives, réaliser une représentation en camembert (pie chart), puis en bâtons (barplot).
-* Taper la ligne de commande suivante : 
+* Taper les lignes de commande suivante : 
 
-```{r exercice21.1, echo=TRUE, eval=FALSE}
+```{r exercice21.1, echo = TRUE, eval=FALSE}
 data(iris)
 summary(iris)
 ```
@@ -596,7 +597,7 @@ Pour savoir comment se comportent les variables les unes par rapport aux autres,
 * Utiliser la fonction `pairs()` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
 * Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
 
-```{r exercice21.2, echo=TRUE, eval=FALSE}
+```{r exercice21.2, echo = FALSE, eval=FALSE}
 #2
 pie(table(iris$Species))
 barplot(table(iris$Species))
@@ -640,7 +641,7 @@ dev.off()
 4. Regarder l'aide de la fonction `density()`. Appliquer cette fonction à la variable `Ozone`. Cela retourne-t-il une erreur ? Pourquoi ? Corriger la en spécifiant une option.
 5. Ajouter la courbe de densité précédemment générer à l'histogramme. *Indice `lines()`*
 
-```{r exercice22,echo=TRUE, eval=FALSE}
+```{r exercice22,echo = FALSE, eval=FALSE}
 data(airquality)
 hist(airquality$Ozone)
 hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue")
@@ -656,13 +657,14 @@ lines(d)
 ## Exercice 23
 
 Les données « old faithful geyser » ont été collectées dans le cadre d’une étude du temps d’attente entre deux éruptions et la durée des éruptions au sein du parc National de Yellowstone (USA). Ce jeu de données est disponible sous R et est nommé `faithful` (package datasets). Le seuil critique d’attente au delà duquel la probabilité que la prochaine éruption soit longue et forte est fixé à 63.
+
 1. Télécharger et visualiser le jeu de données (fonction `plot( )`), en affichant également la limite des 63 secondes.
-2. Calculer un vecteur `vec` de 100000 points correspondant à la loi normale de moyenne `m` et d'éacrt type `sd` correspondant à la moyenne, et à l'écart type, des durées d'éruption
-3. Construire un histogramme de la durée d’éruption. Représenter l’histogramme en terme de densité plutôt qu’en termes d’effectifs (axe Y). Ajouter un titre, nommer les axes et colorer les barres de l’histogramme en vert et les traits de l’histogramme en rouge. Augmenter la taille du pas de l’histogramme à 20.
+2. Calculer un vecteur `vec` de 100000 points correspondant à la loi normale de moyenne `m` et d'écart type `sd` correspondant à la moyenne, et à l'écart type, des durées d'éruption.
+3. Construire un histogramme de la durée d’éruption. Représenter l’histogramme en terme de densité plutôt qu’en terme d’effectifs (axe Y). Ajouter un titre, nommer les axes et colorer les barres de l’histogramme en vert et les traits de l’histogramme en rouge. Augmenter la taille du pas de l’histogramme à 20.
 4. Ajouter la densité du vecteur de point `vec` à l'histogramme (*Indice : `lines()`, `density()`*. Que remarquez-vous ?
 5. Utiliser la fonction `layout` pour afficher un scatter plot
 
-```{r exercice23, echo=TRUE, eval=FALSE}
+```{r exercice23, echo = FALSE, eval=FALSE}
 #1 
 data(faithful)
 ?faithful
@@ -725,14 +727,16 @@ barplot(yhist$density, axes=FALSE, xlim=c(0, max(yhist$density, yy)),space=0, ho
 ```
 
 
-## Exercice 24
+## Exercice 24 : ah si j'étais riche !
 Un ami vous propose le jeu suivant. On lance un dé. Si le résultat est 5 ou 6, on gagne 3 €, si le résultat est 4 on gagne 1 € et si c'est 3 ou moins on perd 2.5€. Avant d'accepter la partie, vous essayez de simuler ce jeu, pour voir si vous avez des chances de vous enrichir. 
-1. creer une fonction `simul` qui prend comme argument un entier compris entre 1 et 6, et qui retourne la somme correspondante.
-2. creer un vecteur `tirage`, simulant le resultat de 1000 tirages de dès.
+
+1. Créer une fonction `simul` qui prend comme argument un entier compris entre 1 et 6, et qui retourne la somme correspondante.
+2. Créer un vecteur `tirage`, simulant le résultat de 1000 tirages de dés.
 3. Afficher sur un graphique la simulation du jeu.
+
 Conclusion ?
 
-```{r exercice24, echo=TRUE, eval=FALSE}
+```{r exercice24, echo = FALSE, eval=FALSE}
 
 #1
 simul = function(i){
@@ -779,7 +783,7 @@ Nous avons chargé 2 objets :
 3. On veut à présent représenter le nombres de visites par des couches de couleurs différentes plutôt que par des symboles proportionnels. Quelle fonction doit-on utiliser ? Appliquer la fonction aux données. Le résultat obtenu vous parait-il correct ? 
 4. Regarder le contenu de l'objet `WorldCountries@data`. Construisez un nouveau dataframe contenant tous les pays et les nombres de visites (NA ou 0 si inconnu). Réessayez de créer le graphique de la question précédente. *Indice : pour créer le nouveau dataframe, la fonction `merge` peut vous être utile*
 
-```{r exercice25, echo=TRUE, eval=FALSE}
+```{r exercice25, echo = FALSE, eval=FALSE}
 library(cartography)
 load((url("http://wukan.ums-riate.fr/bond/bondfiles.RData")))
 head(BondVisits)
@@ -797,10 +801,10 @@ choroLayer(spdf = WorldCountries, df = BondVisits2, var="n", legend.title.txt = 
 ```
 
 
+\newpage
+Pour aller plus loin, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire un des plot du TP, rien de plus simple : 
 
-Pour aller plus loin, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire le plot précédent, rien de plus simple : 
-
-```{r exo ggplo2, echp=TRUE, eval=FALSE}
+```{r exo ggplo2, echo=TRUE, eval=TRUE}
 library(ggplot2)
 data(diamonds)
 
