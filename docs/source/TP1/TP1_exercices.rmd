@@ -758,9 +758,6 @@ plot(gain)
 
 ```
 
-
-
-
 ## exercice 25 : James Bond autour du monde 
 
 R contient de nombreux packages nous permettant de faire des représentations graphiques de toutes sortes. Certains packages permettent de faire des représentations spatiales (`rgdal`, `sp`, `rgeos`,`cartography`). Conçu comme une boite à outil dédiée à la cartographie thématique, le package `cartography` est développé au sein de l’UMS RIATE (CNRS, CGET, Université Paris Diderot) par Nicolas Lambert et Timothée Giraud.
@@ -796,6 +793,114 @@ choroLayer(spdf = WorldCountries, df = BondVisits, var="n")
 BondVisits2 = merge(BondVisits, WorldCountries@data, by="ISO2", all.y=TRUE)
 
 choroLayer(spdf = WorldCountries, df = BondVisits2, var="n", legend.title.txt = "Nombre de visites")
+```
+
+## Exercice 26 : Profil CGH
+
+Les technologies de génomique permettent de détecter des abérrations au niveau de notre génome (CNA - Copy Number Alteration) : duplication, remaniement, translocation, perte, etc ... En cancérologie, le génome des tumeurs est souvent anormal (voir la figure "Profil CGH").
+Cette exercice a pour objectif de reconstruire ce profil à partir du package "chromosomes" (développé par B. Job, Gustave Roussy) et du jeu de données A01.ASPCF, issu de l'analyse par des microarrays du type "Oncoscan" (Affymetrix) de la tumeur d'un patient.
+
+![Profil CGH](img/A01.ASPCF.png)
+
+1. Installer le package 'chromosomes_1.0-0.tgz' (ce fichier est récupérable sur le site du TP). Charger le package avec la commande `library()`; Enfin, charger le dataset `hg19`. Ceci importe dans votre session R une variable nommée `cs` (chromosome structure) décrivant les positions du génome humaine (version hg19).
+1.1 Quelle est la classe de la variable `cs` ?
+1.2 Combien le génome contient-il de chromosomes ? (*Indice : parcourir l'obet `cs` avec la fonction `str`*)
+1.3 Quelle est la taille du génome humain (dans sa version hg19) ?
+
+2. Charger le fichier `A01.ascat.ASPCF.RDS` dans la variable `cgh`
+2.1 Quelle est la classe de la variable `cgh` ?
+2.2 Combien d'éléments contient cette variable ?
+2.3 Quelle est le genre du patient à qui correspond le profil ?
+
+3. Construction du profil CNA
+3.1 Construction des vecteurs de points à afficher depuis la variable `cgh`:
+
+- Créer le vecteur `tumor_lr` à partir de la variable `cgh`
+- Créer le vecteur `x_snp` contenant les positions génomique des points de mesure
+- Créer le vecteur `x_chr` contenant les nom des chromosomes auxquels appartiennent les points de mesure
+- Créer le vecteur `all_chr` contenant une seule occurrence de ces noms de chromosomes
+
+3.2 En utilisant la variable `cs`, construisez le vecteur `chr_length`, contenant les longueurs des chromosomes. Utiliser la fonction `names` et la variable `cs` pour nommer tous les éléments du vecteur `chr_length`.
+
+3.3 Convertir les positions relatives au chromosome du vecteur `x_snp` en position absolue sur le génome (vecteur `x_snp_abs`)
+
+3.4 Afin d'afficher une version lissée du signal mesuré, calculer la "running médiane" (*Indice : fonction `runmed`*) à partir du vecteur `l2r_tumor`
+
+3.5 A partir de ces vecteurs, essayez de reproduire l'image suivante.
+
+![Ebauche de Profil CGH](img/profil_cgh.png)
+
+* Indice : les lignes vertes correspondent à la moyenne des valeurs absolues des différences mesurées entre deux sondes*
+
+```{r exercice26, echo = FALSE, eval = FALSE}
+#1
+install.packages("chromosomes_1.0-0.tar.gz", repos = NULL, type = "source")
+library("chromosomes")
+data(hg19)
+#1.1
+class(cs)
+#1.2
+str(cs)
+length(cs$chromosomes$chrom)
+#1.3
+str(cs)
+cs$genome.length
+
+#2
+cgh = readRDS(file = "data/A01.ascat.ASPCF.RDS")
+
+#2.1
+class(cgh)
+#2.2
+
+length(cgh)
+#2.3
+cgh$gender
+
+#3.1
+y_tumor_l2r = cgh$Tumor_LogR[,1]
+x_snp       = as.numeric(as.vector(cgh$SNPpos$pos))
+x_chr       = as.vector(cgh$SNPpos$chrs)
+all_chr     = unique(x_chr)
+
+
+#3.2
+chr_length = cs$chromosomes$chr.length.toadd
+chr_names  = cs$chromosomes$chrN
+names(chr_length) = chr_names
+
+#3.3
+x_snp_abs = x_snp
+for (i in all_chr){
+  idx = which(x_chr == i)
+  
+  if (i == "X")      { tmp.chr = 23}
+  else if (i == "Y") { tmp.chr = 24}
+  else               { tmp.chr = as.numeric(i)}
+  
+  valtoadd = chr_length[tmp.chr]
+  
+  x_snp_abs[idx] = x_snp_abs[idx] + valtoadd
+}
+
+#3.4
+l2r_runmed = runmed(y_tumor_l2r ,  k = 301)
+
+#3.5
+plot(x_snp_abs, y_tumor_l2r, ylim = c(-2, 2),col = "gray", pch = ".", ylab = "Log2R", xlab = "", axes = F, xaxs = "i")
+axis(2)
+points(x_snp_abs, l2r_runmed, col="blue", pch = ".")
+abline(h = 0, lty = 2, col = "red")
+abline(v = c(0,cs$chromosomes$chr.length.sum), lty = 2, col = "black")
+box(lwd = 2)
+tmp = mean(abs(diff(y_tumor_l2r))) 
+abline(h = c(-tmp, tmp), lty = 2, col = "darkgreen")
+
+pair = seq(from = 2, to = 24, by = 2)
+impair = seq(from = 1, to = 23, by = 2)
+
+text(x = cs$chromosomes$mid.chr[pair]   + cs$chromosomes$chr.length.toadd[pair],   y = 1.7 , labels = all_chr[pair])
+text(x = cs$chromosomes$mid.chr[impair] + cs$chromosomes$chr.length.toadd[impair], y = -1.7, labels = all_chr[impair])
 ```
 
 
