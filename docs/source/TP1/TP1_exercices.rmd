@@ -654,15 +654,42 @@ lines(d)
 
 ```
 
-## Exercice 23
+## Exercice 23 : Layout
 
 Les données « old faithful geyser » ont été collectées dans le cadre d’une étude du temps d’attente entre deux éruptions et la durée des éruptions au sein du parc National de Yellowstone (USA). Ce jeu de données est disponible sous R et est nommé `faithful` (package datasets). Le seuil critique d’attente au delà duquel la probabilité que la prochaine éruption soit longue et forte est fixé à 63.
 
 1. Télécharger et visualiser le jeu de données (fonction `plot( )`), en affichant également la limite des 63 secondes.
 2. Calculer un vecteur `vec` de 100000 points correspondant à la loi normale de moyenne `m` et d'écart type `sd` correspondant à la moyenne, et à l'écart type, des durées d'éruption.
 3. Construire un histogramme de la durée d’éruption. Représenter l’histogramme en terme de densité plutôt qu’en terme d’effectifs (axe Y). Ajouter un titre, nommer les axes et colorer les barres de l’histogramme en vert et les traits de l’histogramme en rouge. Augmenter la taille du pas de l’histogramme à 20.
-4. Ajouter la densité du vecteur de point `vec` à l'histogramme (*Indice : `lines()`, `density()`*. Que remarquez-vous ?
-5. Utiliser la fonction `layout` pour afficher un scatter plot
+4. Ajouter la densité du vecteur de point `vec` à l'histogramme (*Indice : `lines()`, `density()`*. Que remarquez-vous
+?
+5. Afin de mieux apprehender la distribution des données, il est possible d'afficher plusieurs graphique sur une même grille. L'objectif de cette partie est d'afficher le scatterplot de la question 1, et au dessus et sur la droite, les histogramme des variables "eruption" et "waiting", respectivement. Pour cela, nous utiliserons la fonction `layout()`.
+
+5.1 Creer la matrice suivante :
+
+```{r, echo = TRUE, eval = TRUE}
+layMat = matrix(c(2,0,1,3), ncol=2, byrow=TRUE)
+layMat
+```
+
+Cette matrice permettra à la fonction `layout` d'afficher les prochains `plot` :
+* en bas à gauche
+* en haut à gauche
+* en bas à droite
+(n.b : le chiffre `0` indique qu'aucun `plot`ne pourra être affiché dans cette zone)
+
+5.2 Utiliser la fonction `layout`et la matrice `layMat`pour créer une grille d'affichage ayant les proportions suivantes, puis afficher le résultats (*indice : `layout.show()`*) : 
+
+* premiere colonne : 70% de la largeur total
+* deuxième colonne : 30% de la largeur total
+* premiere ligne : 30% de la largeur total
+* deuxième ligne : 70% de la largeur total
+
+5.3 Afficher sur ce `layout` les 3 graphiques suivants : 
+
+- le scatter plot de la question 1
+- l'histogramme de la variable "eruption"
+- l'histogramme de la variable "waiting" (*indice : pensez à mettre l'hitogramme à l'horizontal*)
 
 ```{r exercice23, echo = FALSE, eval=FALSE}
 #1 
@@ -681,49 +708,20 @@ hist(faithful$eruptions, freq = FALSE, main = "Histogramme de la durée des erup
 lines(density(vec))
 
 #5
-## set up layout and graphical parameters
-layMat <- matrix(c(2,0,1,3), ncol=2, byrow=TRUE)
-layout(layMat, widths=c(5/7, 2/7), heights=c(2/7, 5/7))
-layout.show(n=3)
+#5.1
+layMat = matrix(c(2,0,1,3), ncol=2, byrow=TRUE)
 
-# ospc = 0.5 # outer space
-# pext = 4 # par extension down and to the left
-# bspc = 1 # space between scatter plot and bar plots
-# par. = par(mar=c(pext, pext, bspc, bspc), oma=rep(ospc, 4)) # plot parameters
+#5.2
+layout(layMat, widths=c(0.7, 0.3), heights=c(0.3, 0.7 ))
+layout.show(n=3)
 
  ## scatter plot
 plot(faithful, xlim=range(faithful$eruptions), ylim=range(faithful$waiting))
+xhist = hist(faithful$eruptions, plot=FALSE, breaks=20)
+yhist = hist(faithful$waiting  , plot=FALSE, breaks=20)
+barplot(xhist$density, axes=FALSE, space=0) 
+barplot(yhist$density, axes=FALSE, space=0, horiz=TRUE)
 
-## determine barplot and height parameter
-## histogram (for barplot-ting the density)
-lhist = 20
-num.dnorm = 5 * lhist
-
-xhist = hist(faithful$eruptions, plot=FALSE, breaks=lhist)
-yhist = hist(faithful$waiting  , plot=FALSE, breaks=lhist)
-barplot(xhist$density, axes=FALSE, ylim=c(0, max(xhist$density, xy)),space=0) 
-barplot(yhist$density, axes=FALSE, xlim=c(0, max(yhist$density, yy)),space=0, horiz=TRUE)
-
-
-# # evaluation points for the overlaid density
-# xx <- seq(min(faithful$eruptions), max(faithful$eruptions), length.out=num.dnorm)
-# yx <- seq(min(faithful$waiting)  , max(faithful$waiting)  , length.out=num.dnorm)
-# 
-# # density points
-# xy <- dnorm(xx, mean=mean(faithful$eruptions), sd=sd(faithful$eruptions))
-# yy <- dnorm(yx, mean=mean(faithful$waiting)  , sd=sd(faithful$waiting))
-# 
-# par(mar=c(0, pext, 0, 0))
-# 
-# # barplot pour "eruption"
-# barplot(xhist$density, axes=FALSE, ylim=c(0, max(xhist$density, xy)),space=0) 
-# # line pour "eruption"
-# lines(seq(from=0, to=lhist-1, length.out=num.dnorm), xy, col="blue") 
-# 
-# # barplot pour "waiting"
-# barplot(yhist$density, axes=FALSE, xlim=c(0, max(yhist$density, yy)),space=0, horiz=TRUE)
-# # line pour "waiting"
-# lines(yy, seq(from=0, to=lhist-1, length.out=num.dnorm), col="blue")
 ```
 
 
