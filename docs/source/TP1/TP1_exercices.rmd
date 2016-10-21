@@ -27,7 +27,7 @@ Soit `a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")`
 * Essayer de supprimer les lannisters et les greyjoy ?
 * Trier par ordre alphabetique. *indice : `sort`* ?
 
-```{r exercice1, echo = FALSE, eval = FALSE }
+```{r exercice1, echo = TRUE, eval = FALSE }
 a=c("lannister", "targaryen", "baratheon", "starck", "greyjoy")
 a[1:3]
 a[-1]
@@ -43,7 +43,7 @@ sort(a)
 
 *Indice: `seq`.*
 
-```{r exercice2, echo = FALSE, eval = FALSE}
+```{r exercice2, echo = TRUE, eval = FALSE}
 a = c(1:100)
 b = seq(from = 2, to = 100, by = 2)
 c = a[-b]
@@ -56,7 +56,7 @@ c = a[-b]
 3. Créer le vecteur « vec3 » contenant une fois la lettre A, deux fois la lettre B, trois fois la lettre C ... et 26 fois la lettre Z. Quelle est la longueur de cette suite ?
 *Indice: `LETTERS`; `length()`; `rep()`*
 
-```{r exercice3, echo = FALSE, eval = FALSE}
+```{r exercice3, echo = TRUE, eval = FALSE}
 #1
 vec1 = seq(from=2, to=50, by=2 )
 
@@ -73,7 +73,7 @@ length(vec3)
 Créer le vecteur « vec4 » contenant les noms suivants : « individu1 », « individu2 », ... , « individu100 ».
 *Indice : `paste()`*
 
-```{r exercice4, echo = FALSE, eval = FALSE}
+```{r exercice4, echo = TRUE, eval = FALSE}
 
 vec4 = paste("individuc", 1:100, sep="")
 
@@ -87,7 +87,7 @@ vec4 = paste("individuc", 1:100, sep="")
 3. Que permet de faire la fonction `table` ? Appliquez la à `fac`.
 4. Quels sonts les modalités de ce facteurs ? *indice : `levels`*
 
-```{r exercice5, echo = FALSE, eval = FALSE}
+```{r exercice5, echo = TRUE, eval = FALSE}
 fac = factor(c("a","b","b","b","a","b","a","a"))
 length(which(fac == "a"))
 length(which(fac == "b"))
@@ -97,14 +97,14 @@ levels(fac)
 
 ## Exercice 6 : Matrices
 
-1. Exécuter la commande `a = rep(0:1, 50)`. Qu'a-t-on fait ?
+1. Exécutez la commande `a = rep(0:1, 50)`. Qu'a-t-on fait ?
 2. Utilisez `a` pour construire une matrice `A` à 10 lignes et 10 colonnes.
 3. Utilisez la fonction `t` sur cette matrice pour créer une matrice `B`. Que s'est-il passé ?
 4. Que se passe-t-il après l'opération `M =  A+B` ? Quelle est la dimension de la matrice `M` ? *indices : `ncol`, `nrow`, `dim`*
 5. Les commandes `A[1:5, ]` et `B[, 1:5]` permettent de récuperer respectivement les 5 premières lignes de `A` et les 5 dernières colonnes de `B`. Inspirez-vous de ces commandes pour récupérez les lignes de 1 de `A` et les colonnes de 0 de `B`.
 6. Extrayez les `2` de la matrice `M`.
 
-```{r exercice6, echo = FALSE, eval = FALSE}
+```{r exercice6, echo = TRUE, eval = FALSE}
 #1
 a = rep(0:1, 50)
 
@@ -134,7 +134,7 @@ M2    = which(M==2)
 4. Rajoutez à la liste `x` un vecteur `alphabet` contenant les lettres de l'alphabet. *indice : `letters`*
 5. Essayez de transformer de nouveau `x` en `data.frame`. Que se passe-t-il ?
 
-````{r exercice7, echo = FALSE, eval = FALSE}
+````{r exercice7, echo = TRUE, eval = FALSE}
 #1
 x = list(
   a = rnorm(10),
@@ -163,11 +163,12 @@ as.data.frame(x)
 
 ## Exercice 8 : `for`
 
-1. Lisez l'aide sur la procédure permettant de réaliser des boucles indicées `for` (`help("for")`). *Remarque :* demander de l'aide sur cette procédure avec la syntaxe `?for` ne fonctionnera pas ! Pourquoi ?
+1. Lisez l'aide sur la procédure permettant de réaliser des boucles indicées `for` (`help("for")`). 
+*Remarque :* demander de l'aide sur cette procédure avec la syntaxe `?for` ne fonctionnera pas ! Pourquoi ?
 2. Créer une boucle qui affiche l'indice « i » de l’itération en cours (10 itérations)
 3. A l'aide d'une boucle, calculez la somme des entiers pairs compris entre 1 et 100.
 
-```{r exercice8, echo = FALSE, eval = FALSE }
+```{r exercice8, echo = TRUE, eval = FALSE }
 #1
 help("for")
 
@@ -190,7 +191,7 @@ somme
 2. Utilisez les structures `if` et `else` pour créer un programme qui prend en entrée un réel $x$ et qui lui associe $y=x^2$ si $x$ est positif et $y=x^3$ si $x$ est négatif.
 3. Utilisez les structures `if` et `else` pour créer un programme qui imprime à l'écran, pour chaque entier relatif $i$ compris entre -10 et 10, $i^3$ si $i<=0$, ou $i^2$ si $i>0$. 
 
-```{r exercice9, echo = FALSE, eval = FALSE }
+```{r exercice9, echo = TRUE, eval = FALSE }
 #1
 help("if")
 
@@ -221,9 +222,10 @@ for (i in -10:10){
 ## Exercice 10 : utilisations des comparateurs
 
 Créer le vecteur « vecPasMultiples » contenant tous les nombres de 1 à 100 qui ne sont pas des multiples de 5.
+
 *Indice : `%%`*
 
-```{r exercice10, echo=FALSE, eval=FALSE}
+```{r exercice10, echo = TRUE, eval=FALSE}
 vec = 1:100
 mod = vec %%5
 idx = which(mod != 0)
@@ -234,9 +236,10 @@ vecPasMultiples = vec[idx]
 
 1. Créer un vecteur `vecAlea` de 100 valeurs tirées aléatoirement selon une loi normale de moyenne 4 et d’écart type 5.
 2. Donner les indices des valeurs supérieures à 3, puis récupérer ces valeurs dans le vecteur `vecSup`. 
+
 *Indice : `rnorm`, `sample`*
 
-```{r exercice11, echo = FALSE, eval=FALSE}
+```{r exercice11, echo = TRUE, eval=FALSE}
 #1
 vecAlea = sample(x = rnorm(n=100, mean = 4, sd = 5), size = 100)
 
@@ -247,10 +250,15 @@ vecSup = vecAlea[idxSup30]
 ```
 
 # Exercice 12 : else ...if 
-Créer une matrice « A » de dimension 10 lignes x 10 colonnes telle que : A[i, i] = 2 ; A[i, i+1] = -1 ; A[i+1, i] = 1 ; le reste des valeurs = 0.
+Créer une matrice « A » de dimension 10 lignes x 10 colonnes telle que : 
+    - A[i, i] = 2 
+    - A[i, i+1] = -1 
+    - A[i+1, i] = 1
+    - le reste des valeurs = 0.
+
 *Indice : else if()*
 
-```{r exercice12, echo = FALSE, eval=FALSE}
+```{r exercice12, echo = TRUE, eval=FALSE}
 
 A = matrix(0,nrow = 10, ncol=10)
 for (i in 1:10){
@@ -275,7 +283,7 @@ for (i in 1:10){
 3. Afficher les « marges » de matrice (sommes des valeurs en lignes et en colonnes).
 *Indice : `apply`*
 
-```{r exercice13, echo = FALSE, eval=FALSE}
+```{r exercice13, echo = TRUE, eval=FALSE}
 #1
 matrice = matrix(0,nrow = 10, ncol=10)
 for (j in 1:10){
@@ -310,7 +318,7 @@ moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
 
 *Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`. Par exemple
 
-```{r exercice14, echo = FALSE, eval = FALSE}
+```{r exercice14, echo = TRUE, eval = FALSE}
 #1
 data(iris)
 str(iris)
@@ -338,7 +346,7 @@ moyenneET(4)
 
 Créer une fonction nommée « somme » qui calcule la somme de deux variables « x » et « y » passées en arguments.
 
-```{r exercice15, echo = FALSE, eval=FALSE}
+```{r exercice15, echo = TRUE, eval=FALSE}
 somme = function(x, y){
   resultat = x+y
   return(resultat)
@@ -352,7 +360,7 @@ la sortie de la boucle, une variable que l’on appellera `nb_tirages` contiendr
 2. Utiliser le code de la question précédente pour réaliser la fonction `trouver_nombre`, qui, lorsqu’on lui donne un nombre compris entre 1 et 100, retourne le nombre de tirages aléatoires d’entiers compris entre 1 et 100 nécessaires avant de tirer le nombre mystère.
 3. En utilisant une boucle for, faire appel 1000 fois à la fonction `trouver_nombre()` qui vient d’être créée. À chaque itération, stocker le résultat dans un élément d’un vecteur que l’on appellera `nb_essais_rep`. Enfin, afficher la moyenne du nombre de tirages nécessaires pour retrouver le nombre magique.
 
-```{r exercice16, echo = FALSE, eval = FALSE}
+```{r exercice16, echo = TRUE, eval = FALSE}
 # 1
 nombre_mystere = 59
 
@@ -409,7 +417,7 @@ nom.prenom@etudiant.centralsupelec.fr.
 ```
 
 
-```{r exercice17, echo = FALSE, eval=FALSE}
+```{r exercice17, echo = TRUE, eval=FALSE}
 #1
 parseMail = function(email){
   nom_prenom = unlist(strsplit(email, "@"))[1]
@@ -454,7 +462,7 @@ Elle contient des informations fictives sur des utilisateurs de Twitter ; chaque
 
 5. Quelle est la structure de l’objet `res` obtenu à la question précédente ?
 
-```{r exercice18, echo = FALSE, eval = FALSE}
+```{r exercice18, echo = TRUE, eval = FALSE}
 #1
 load("twittos.rda")
 
@@ -491,7 +499,7 @@ suivantes: `read.table()`, `read.csv()`, `read.csv2()` et `scan()`. Par ailleurs
 *Indice : `help("read.table")`, `help("is.na")`*
 
 
-```{r exercice19, echo = FALSE, eval = FALSE}
+```{r exercice19, echo = TRUE, eval = FALSE}
 #1
 A = read.table(file="auto2004_original.txt", sep="\t", header = TRUE)
 
@@ -528,15 +536,15 @@ Créer la matrice suivante :
   \right]
 \]
 
-1. Ecrire la matrice `A` dans un fichier nommé `matrice.txt`. Que remarquez vous?
+1. Ecrire la matrice `A` dans un fichier nommé `matrice.txt`. Que remarquez-vous?
 2. Ajouter des arguments à la commande précédente pour retirer des noms aux lignes et aux colonnes du fichier créé.
 3. Sauver la matrice `A` au format `.Rdata` dans le fichier `matriceA.Rdata` grâce à la fonction `save`.
 4. Sauver la matrice `A` au format `.Rds` dans le fichier `matriceA.Rds` grâce à la fonction `saveRDS`.
 5. Que donne la commande `C = load("matriceA.Rdata")` ?
 6. Que donne la commande `D = readRDS("matriceA.Rds")` ?
-7. Sauver toutes les variables dans un fichier nommés "données.Rdata"
+7. Sauver toutes les variables dans un fichier nommé "données.Rdata"
   
-```{r exercice20, echo = FALSE, eval =FALSE}
+```{r exercice20, echo = TRUE, eval =FALSE}
 
 A = matrix(seq(12), ncol = 4, byrow = TRUE)
 
@@ -585,19 +593,19 @@ Quel résultat obtenez-vous ?
 * Réaliser le même graphique en ajoutant un titre et en supprimant les valeurs extrêmes.
 * Représenter le pie chart et le boxplot sur la même fenêtre graphique. *Indice `par()`, option mfrow*
 * Représenter un scatter plot simple avec en abscisse la longueur des pétales et en ordonnées leur largeur. *Indice `plot`*
-* Afin de découvrir les différents paramètre de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :  
+* Afin de découvrir les différents paramètres de la fonction `plot`, refaite le même graphique qu'à la fonction précédente en :  
   
-   * augmentant la taille des points
-   * remplaçant les points par des triangles de couleur rouge _Indice `pch` option_
-   * ajoutant une ligne horizontale en pointillé à y=1
-   * (question plus difficile) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
+    * augmentant la taille des points
+    * remplaçant les points par des triangles de couleur rouge _Indice `pch` option_
+    * ajoutant une ligne horizontale en pointillé à y=1
+    * (question plus difficile) colorant les points en fonction de l'espèce : setosa = noir ; versicolor = rouge ; virginica = vert
    
 Pour savoir comment se comportent les variables les unes par rapport aux autres, on pourrait créer autant de scatter plot que nécessaire mais il existe une fonction qui permet de faire ceci rapidement : `pairs()`.
 
 * Utiliser la fonction `pairs()` sur les données numérique du jeu de données `iris`. Colorer les points en fonction de l'espèce.
 * Exporter ce graphique en pdf sur votre machine. *Indice `pdf()` ; `dev.off()`*
 
-```{r exercice21.2, echo = FALSE, eval=FALSE}
+```{r exercice21.2, echo = TRUE, eval=FALSE}
 #2
 pie(table(iris$Species))
 barplot(table(iris$Species))
@@ -636,12 +644,12 @@ dev.off()
 ## Exercice 22 : distribution et density plot
 
 1. Charger le jeu de données `airquality`.
-2. Prendre connaissance des donées (dimension, type).
+2. Prendre connaissance des données (dimension, type).
 3. Construire un histogramme de la variable `Ozone`. Représenter l'histogramme en terme de probabilité de densité plutôt qu'en terme de fréquence (axe Y). Ajouter un titre, modifier le noms des axes, et colorer les barres de l'histogramme en gris  et les traits de l'histogramme en bleu. Augmenter la taille  du pas de l'histogramme à 30.
 4. Regarder l'aide de la fonction `density()`. Appliquer cette fonction à la variable `Ozone`. Cela retourne-t-il une erreur ? Pourquoi ? Corriger la en spécifiant une option.
 5. Ajouter la courbe de densité précédemment générer à l'histogramme. *Indice `lines()`*
 
-```{r exercice22,echo = FALSE, eval=FALSE}
+```{r exercice22,echo = TRUE, eval=FALSE}
 data(airquality)
 hist(airquality$Ozone)
 hist(airquality$Ozone, freq=FALSE, main="Histogramme Ozone", xlab="Ozone", ylab="Densité", col = "gray", border = "blue")
@@ -663,27 +671,29 @@ Les données « old faithful geyser » ont été collectées dans le cadre d’u
 3. Construire un histogramme de la durée d’éruption. Représenter l’histogramme en terme de densité plutôt qu’en terme d’effectifs (axe Y). Ajouter un titre, nommer les axes et colorer les barres de l’histogramme en vert et les traits de l’histogramme en rouge. Augmenter la taille du pas de l’histogramme à 20.
 4. Ajouter la densité du vecteur de point `vec` à l'histogramme (*Indice : `lines()`, `density()`*. Que remarquez-vous
 ?
-5. Afin de mieux apprehender la distribution des données, il est possible d'afficher plusieurs graphique sur une même grille. L'objectif de cette partie est d'afficher le scatterplot de la question 1, et au dessus et sur la droite, les histogramme des variables "eruption" et "waiting", respectivement. Pour cela, nous utiliserons la fonction `layout()`.
+5. Afin de mieux apprehender la distribution des données, il est possible d'afficher plusieurs graphiques sur une même grille. L'objectif de cette partie est d'afficher le scatterplot de la question 1, et au dessus et sur la droite, les histogrammes des variables "eruption" et "waiting", respectivement. Pour cela, nous utiliserons la fonction `layout()`.
 
-5.1 Creer la matrice suivante :
+5.1 Créer la matrice suivante :
 
 ```{r, echo = TRUE, eval = TRUE}
 layMat = matrix(c(2,0,1,3), ncol=2, byrow=TRUE)
 layMat
 ```
 
-Cette matrice permettra à la fonction `layout` d'afficher les prochains `plot` :
+Cette matrice permettra à la fonction `layout` d'afficher les prochains plot :
+
 * en bas à gauche
 * en haut à gauche
 * en bas à droite
-(n.b : le chiffre `0` indique qu'aucun `plot`ne pourra être affiché dans cette zone)
 
-5.2 Utiliser la fonction `layout`et la matrice `layMat`pour créer une grille d'affichage ayant les proportions suivantes, puis afficher le résultats (*indice : `layout.show()`*) : 
+(n.b : le chiffre `0` indique qu'aucun `plot` ne pourra être affiché dans cette zone)
 
-* premiere colonne : 70% de la largeur total
-* deuxième colonne : 30% de la largeur total
-* premiere ligne : 30% de la largeur total
-* deuxième ligne : 70% de la largeur total
+5.2 Utiliser la fonction `layout` et la matrice `layMat` pour créer une grille d'affichage ayant les proportions suivantes, puis afficher le résultats (*indice : `layout.show()`*) : 
+
+* première colonne : 70% de la largeur totale
+* deuxième colonne : 30% de la largeur totale
+* première ligne : 30% de la largeur totale
+* deuxième ligne : 70% de la largeur totale
 
 5.3 Afficher sur ce `layout` les 3 graphiques suivants : 
 
@@ -691,7 +701,7 @@ Cette matrice permettra à la fonction `layout` d'afficher les prochains `plot` 
 - l'histogramme de la variable "eruption"
 - l'histogramme de la variable "waiting" (*indice : pensez à mettre l'hitogramme à l'horizontal*)
 
-```{r exercice23, echo = FALSE, eval=FALSE}
+```{r exercice23, echo = TRUE, eval=FALSE}
 #1 
 data(faithful)
 ?faithful
@@ -734,7 +744,7 @@ Un ami vous propose le jeu suivant. On lance un dé. Si le résultat est 5 ou 6,
 
 Conclusion ?
 
-```{r exercice24, echo = FALSE, eval=FALSE}
+```{r exercice24, echo = TRUE, eval=FALSE}
 
 #1
 simul = function(i){
@@ -758,7 +768,7 @@ plot(gain)
 
 ```
 
-## exercice 25 : James Bond autour du monde 
+## Exercice 25 : James Bond autour du monde 
 
 R contient de nombreux packages nous permettant de faire des représentations graphiques de toutes sortes. Certains packages permettent de faire des représentations spatiales (`rgdal`, `sp`, `rgeos`,`cartography`). Conçu comme une boite à outil dédiée à la cartographie thématique, le package `cartography` est développé au sein de l’UMS RIATE (CNRS, CGET, Université Paris Diderot) par Nicolas Lambert et Timothée Giraud.
 
@@ -778,7 +788,7 @@ Nous avons chargé 2 objets :
 3. On veut à présent représenter le nombres de visites par des couches de couleurs différentes plutôt que par des symboles proportionnels. Quelle fonction doit-on utiliser ? Appliquer la fonction aux données. Le résultat obtenu vous parait-il correct ? 
 4. Regarder le contenu de l'objet `WorldCountries@data`. Construisez un nouveau dataframe contenant tous les pays et les nombres de visites (NA ou 0 si inconnu). Réessayez de créer le graphique de la question précédente. *Indice : pour créer le nouveau dataframe, la fonction `merge` peut vous être utile*
 
-```{r exercice25, echo = FALSE, eval=FALSE}
+```{r exercice25, echo = TRUE, eval=FALSE}
 library(cartography)
 load((url("http://wukan.ums-riate.fr/bond/bondfiles.RData")))
 head(BondVisits)
@@ -798,41 +808,42 @@ choroLayer(spdf = WorldCountries, df = BondVisits2, var="n", legend.title.txt = 
 ## Exercice 26 : Profil CGH
 
 Les technologies de génomique permettent de détecter des abérrations au niveau de notre génome (CNA - Copy Number Alteration) : duplication, remaniement, translocation, perte, etc ... En cancérologie, le génome des tumeurs est souvent anormal (voir la figure "Profil CGH").
-Cette exercice a pour objectif de reconstruire ce profil à partir du package "chromosomes" (développé par B. Job, Gustave Roussy) et du jeu de données A01.ASPCF, issu de l'analyse par des microarrays du type "Oncoscan" (Affymetrix) de la tumeur d'un patient.
 
-![Profil CGH](img/A01.ASPCF.png)
+Cet exercice a pour objectif de reconstruire ce profil à partir du package "chromosomes" (développé par B. Job, Gustave Roussy) et du jeu de données A01.ASPCF, issu de l'analyse par des microarrays du type "Oncoscan" (Affymetrix) de la tumeur d'un patient.
+
+![Profil CGH](img/A01_ASPCF.png)
 
 1. Installer le package 'chromosomes_1.0-0.tgz' (ce fichier est récupérable sur le site du TP). Charger le package avec la commande `library()`; Enfin, charger le dataset `hg19`. Ceci importe dans votre session R une variable nommée `cs` (chromosome structure) décrivant les positions du génome humaine (version hg19).
-1.1 Quelle est la classe de la variable `cs` ?
-1.2 Combien le génome contient-il de chromosomes ? (*Indice : parcourir l'obet `cs` avec la fonction `str`*)
-1.3 Quelle est la taille du génome humain (dans sa version hg19) ?
+    a. Quelle est la classe de la variable `cs` ?
+    b. Combien le génome contient-il de chromosomes ? (*Indice : parcourir l'obet `cs` avec la fonction `str`*)
+    c. Quelle est la taille du génome humain (dans sa version hg19) ?
 
 2. Charger le fichier `A01.ascat.ASPCF.RDS` dans la variable `cgh`
-2.1 Quelle est la classe de la variable `cgh` ?
-2.2 Combien d'éléments contient cette variable ?
-2.3 Quelle est le genre du patient à qui correspond le profil ?
+    a. Quelle est la classe de la variable `cgh` ?
+    b. Combien d'éléments contient cette variable ?
+    c. Quelle est le genre du patient à qui correspond le profil ?
 
 3. Construction du profil CNA
-3.1 Construction des vecteurs de points à afficher depuis la variable `cgh`:
+    a. Construction des vecteurs de points à afficher depuis la variable `cgh` :
 
-- Créer le vecteur `tumor_lr` à partir de la variable `cgh`
-- Créer le vecteur `x_snp` contenant les positions génomique des points de mesure
-- Créer le vecteur `x_chr` contenant les nom des chromosomes auxquels appartiennent les points de mesure
-- Créer le vecteur `all_chr` contenant une seule occurrence de ces noms de chromosomes
+        - Créer le vecteur `tumor_lr` à partir de la variable `cgh`
+        - Créer le vecteur `x_snp` contenant les positions génomique des points de mesure
+        - Créer le vecteur `x_chr` contenant les nom des chromosomes auxquels appartiennent les points de mesure
+        - Créer le vecteur `all_chr` contenant une seule occurrence de ces noms de chromosomes
 
-3.2 En utilisant la variable `cs`, construisez le vecteur `chr_length`, contenant les longueurs des chromosomes. Utiliser la fonction `names` et la variable `cs` pour nommer tous les éléments du vecteur `chr_length`.
+    b. En utilisant la variable `cs`, construisez le vecteur `chr_length`, contenant les longueurs des chromosomes. Utiliser la fonction `names` et la variable `cs` pour nommer tous les éléments du vecteur `chr_length`.
 
-3.3 Convertir les positions relatives au chromosome du vecteur `x_snp` en position absolue sur le génome (vecteur `x_snp_abs`)
+    c. Convertir les positions relatives au chromosome du vecteur `x_snp` en position absolue sur le génome (vecteur `x_snp_abs`)
 
-3.4 Afin d'afficher une version lissée du signal mesuré, calculer la "running médiane" (*Indice : fonction `runmed`*) à partir du vecteur `l2r_tumor`
+    d. Afin d'afficher une version lissée du signal mesuré, calculer la "running médiane" (*Indice : fonction `runmed`*) à partir du vecteur `l2r_tumor`
 
-3.5 A partir de ces vecteurs, essayez de reproduire l'image suivante.
+    e. A partir de ces vecteurs, essayez de reproduire l'image suivante.
 
 ![Ebauche de Profil CGH](img/profil_cgh.png)
 
-* Indice : les lignes vertes correspondent à la moyenne des valeurs absolues des différences mesurées entre deux sondes*
+*Indice : les lignes vertes correspondent à la moyenne des valeurs absolues des différences mesurées entre deux sondes*
 
-```{r exercice26, echo = FALSE, eval = FALSE}
+```{r exercice26, echo = TRUE, eval = FALSE}
 #1
 install.packages("chromosomes_1.0-0.tar.gz", repos = NULL, type = "source")
 library("chromosomes")
@@ -907,7 +918,7 @@ text(x = cs$chromosomes$mid.chr[impair] + cs$chromosomes$chr.length.toadd[impair
 \newpage
 Pour aller plus loin, et faire des graphiques encore plus jolis, il existe un package, `ggplot2`, qui possède sa propre grammaire. Pour reproduire un des plot du TP, rien de plus simple : 
 
-```{r exo ggplo2, echo=TRUE, eval=TRUE}
+```{r exo ggplo2, echo = TRUE, eval=TRUE}
 library(ggplot2)
 data(diamonds)
 
