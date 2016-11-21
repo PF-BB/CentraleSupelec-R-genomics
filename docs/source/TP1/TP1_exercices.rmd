@@ -101,7 +101,7 @@ levels(fac)
 2. Utilisez `a` pour construire une matrice `A` à 10 lignes et 10 colonnes.
 3. Utilisez la fonction `t` sur cette matrice pour créer une matrice `B`. Que s'est-il passé ?
 4. Que se passe-t-il après l'opération `M =  A+B` ? Quelle est la dimension de la matrice `M` ? *indices : `ncol`, `nrow`, `dim`*
-5. Les commandes `A[1:5, ]` et `B[, 1:5]` permettent de récuperer respectivement les 5 premières lignes de `A` et les 5 dernières colonnes de `B`. Inspirez-vous de ces commandes pour récupérez les lignes de 1 de `A` et les colonnes de 0 de `B`.
+5. Les commandes `A[1:5, ]` et `B[, 1:5]` permettent de récuperer respectivement les 5 premières lignes de `A` et les 5 premières colonnes de `B`. Inspirez-vous de ces commandes pour récupérez les lignes de 1 de `A` et les colonnes de 0 de `B`.
 6. Extrayez les `2` de la matrice `M`.
 
 ```{r exercice6, echo = TRUE, eval = FALSE}
@@ -188,7 +188,7 @@ somme
 ## Exercice 9 : `for`, `if` et `else`
 
 1. Comme dans l'exercice précédent, lisez l'aide de la procédure conditionnelle `if` : (`help("if")`).
-2. Utilisez les structures `if` et `else` pour créer un programme qui prend en entrée un réel $x$ et qui lui associe $y=x^2$ si $x$ est positif et $y=x^3$ si $x$ est négatif.
+2. Utilisez les structures `if` et `else` pour créer un programme qui prend en entrée un réel $x$ et qui lui associe $y=x^2$ si $x$ est strictement positif et $y=x^3$ si $x$ est négatif ou nul.
 3. Utilisez les structures `if` et `else` pour créer un programme qui imprime à l'écran, pour chaque entier relatif $i$ compris entre -10 et 10, $i^3$ si $i<=0$, ou $i^2$ si $i>0$. 
 
 ```{r exercice9, echo = TRUE, eval = FALSE }
@@ -237,7 +237,7 @@ vecPasMultiples = vec[idx]
 1. Créer un vecteur `vecAlea` de 100 valeurs tirées aléatoirement selon une loi normale de moyenne 4 et d’écart type 5.
 2. Donner les indices des valeurs supérieures à 3, puis récupérer ces valeurs dans le vecteur `vecSup`. 
 
-*Indice : `rnorm`, `sample`*
+*Indice : `rnorm`*
 
 ```{r exercice11, echo = TRUE, eval=FALSE}
 #1
@@ -251,7 +251,8 @@ vecSup = vecAlea[idxSup30]
 
 # Exercice 12 : else ...if 
 Créer une matrice « A » de dimension 10 lignes x 10 colonnes telle que : 
-    - A[i, i] = 2 
+
+    - A[i, i] = 2
     - A[i, i+1] = -1 
     - A[i+1, i] = 1
     - le reste des valeurs = 0.
@@ -316,7 +317,7 @@ moyenneET = function(i) c(moy = mean(iris[,i]), et = sd(iris[,i]) )
 
 3. Afficher l'aide de la fonction `apply`. En utilisant cette fonction, calculez la moyenne et l'écart type des colonnes numériques du dataset `iris`. Comparer le résultat avec celui obtenu par la foncion `moyenneET`.
 
-*Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`. Par exemple
+*Remarque :* pour exécuter plusieurs commandes au sein d'une même fonction, il faut utiliser des accolades `{...}`.
 
 ```{r exercice14, echo = TRUE, eval = FALSE}
 #1
@@ -353,12 +354,14 @@ somme = function(x, y){
 }
 ```
 
-## Exercice 16 : fonction et boucle while
+## Exercice 16 : Nombre mystère
 
 1. Choisir un nombre mystère entre 1 et 100, et le stocker dans un objet que l’on nommera `nombre_mystere`. Ensuite, créer une boucle qui à chaque itération effectue un tirage aléatoire d’un entier compris entre 1 et 100. Tant que le nombre tiré est différent du nombre mystère, la boucle doit continuer. À
 la sortie de la boucle, une variable que l’on appellera `nb_tirages` contiendra le nombre de tirages réalisés pour obtenir le nombre mystère.
 2. Utiliser le code de la question précédente pour réaliser la fonction `trouver_nombre`, qui, lorsqu’on lui donne un nombre compris entre 1 et 100, retourne le nombre de tirages aléatoires d’entiers compris entre 1 et 100 nécessaires avant de tirer le nombre mystère.
 3. En utilisant une boucle for, faire appel 1000 fois à la fonction `trouver_nombre()` qui vient d’être créée. À chaque itération, stocker le résultat dans un élément d’un vecteur que l’on appellera `nb_essais_rep`. Enfin, afficher la moyenne du nombre de tirages nécessaires pour retrouver le nombre magique.
+
+* Indice : `sample`*
 
 ```{r exercice16, echo = TRUE, eval = FALSE}
 # 1
