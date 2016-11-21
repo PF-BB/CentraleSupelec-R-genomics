@@ -1,0 +1,67 @@
+---
+title: 'TP02 : Analyse de données RNASeq'
+author:
+- Justine Guégan - j.guegan-ihu@icm-institute.org
+- Guillaume Meurice - guillaume.meurice@gustaveroussy.fr
+date: "27 octobre 2016"
+output: pdf_document
+header-includes:
+- \usepackage{nicefrac}
+- \usepackage{graphicx}
+- \newcommand{\cor}{cor}
+---
+
+L'objectif de ce TP est d'analyser un jeu de données 'RNASeq'. Il nécessite le chargement de plusieurs packages qui seront utilisés à différentes étapes du TP : 
+
+- package DESeq2 : 
+
+```{r echo=TRUE, eval = FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("DESeq2")
+```
+
+- package ggplot2
+
+```{r echo=TRUE, eval = FALSE}
+install.packages("ggplot2")
+```
+
+- package pheatmap
+
+```{r echo=TRUE, eval = FALSE}
+install.packages("pheatmap")
+```
+
+- package RColorBrewser
+
+```{r echo=TRUE, eval = FALSE}
+install.packages("RColorBrewser")
+```
+
+
+# Prise en main du jeu de données
+
+1 - Charger les données.
+
+Les données sont disponibles sur le site web du TP, à l'adresse suivante :
+
+https://pf-bb.github.io/CentraleSupelec-R-genomics/
+
+```{r echo = FALSE, eval=FALSE}
+design = read.delim("data/annot_sample.csv",sep="\t", header=T,row.names=1)
+comptage = read.delim("data/counts.txt",sep="\t", header=T,row.names=1)
+countData = comptage[,-c(1:5)]
+colnames(countData) = rownames(design)
+```
+
+# Exercice 1 : Description des échantillons
+Combien y a t'il d'échantillons ?
+Quels sont les modalités et les effectifs du facteur étudié ?
+
+# Exercice 2 : Description des données
+
+Evaluer la dynamique des comptages.
+
+
+
+
