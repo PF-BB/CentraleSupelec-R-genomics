@@ -23,14 +23,14 @@ Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF**
 
 # Données
 
-Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (épithelium) ont été séquencés par Illumina HiSeq2000. Les données brutes sont disponibles sur le site du NCBI, sous sra, étude [SRP032789](ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP032/SRP032789/). 
+Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (épithelium) ont été séquencés par Illumina HiSeq2000. Les données brutes sont disponibles sur le site **Sequence Reads Archive** (SRA), hebergé au NCBI, sous la référence [SRP032789](ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP032/SRP032789/). 
 
 Ces données ont été utilisées dans les 2 articles suivants : 
 
 * J.Eswaran et al. Transcriptomic landscape of breast cancers through mRNA sequencing. Scientific Report (2012) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
 * J.Eswaran et al. RNA sequencing of cancer reveals novel splicing alterations. Scientific Report (2013) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
 
-Afin d'obetnir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, alignées sur le génome de référence humain hg19 avec l'outil STAR, puis la quantification a été faite avec l'outil feature-count. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les indivuds. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
+Afin d'obetnir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, et alignées sur le génome de référence humain hg19 avec l'outil STAR. Puis la quantification a été faite avec l'outil `feature-count`. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les individus. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
 
 # Pré-requis
 
@@ -57,7 +57,7 @@ install.packages("RColorBrewser")
 > **Question** : Chargez en mémoire la table de comptage (fichier `counts.txt`) et la description des échantillons (fichier `annot_sample.txt`).  
 Expliquez chacune des options utilisée.
 
-```{r loadData, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r loadData, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
 comptage = read.table("counts.txt", sep="\t", header=TRUE)
 design = read.table("annot_sample.txt", sep="\t", header=TRUE)
 ```
@@ -65,7 +65,7 @@ design = read.table("annot_sample.txt", sep="\t", header=TRUE)
 
 > **Question** : Quelle est la classe des objets chargés et quelles en sont les dimensions ? Affichez un extrait de chaque objet.
 
-```{r classeObjet, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r classeObjet, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
 class(comptage)
 class(design)
 dim(comptage)
@@ -74,14 +74,12 @@ head(comptage)
 head(design)
 ```
 
-
-
 **2. Exploration des données **
 
 
 > **Question** : Indiquez le nombre d'échantillons par `condition`. Représenter cette répartition sous forme de pie chart.
 
-```{r pieChart, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r pieChart, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 tpie = table(design$condition)
 pie(table(design$condition),labels = paste0(names(tpie)," - ",tpie), main = "Répartition des échantillons par condition")
 ```
@@ -90,7 +88,7 @@ pie(table(design$condition),labels = paste0(names(tpie)," - ",tpie), main = "Ré
 > **Question** : A partir du fichier de comptages, créer un tableau contenant uniquement les données d'annotations des gènes et un tableau contenant uniquement les valeurs de comptages.  
 Sur le tableau de comptage, modifier les noms des lignes pour qu'ils correspondent aux noms des gènes, et les noms de colonnes pour qu'ils correspondent aux noms d'échantillons (`sampleName`).
 
-```{r comptage, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r comptage, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
 annotgene = comptage[,1:6]
 comptage = comptage[,-c(1:6)]
 rownames(comptage) = annotgene$Geneid
@@ -98,22 +96,20 @@ colnames(comptage) = design$sampleName
 ```
 
 
-> **Question** : Pour chaque échantillon, indiquez les statistiques simples sur les valeurs de comptages (moyenne, médiane, min, max, 1er et 3ème quartiles). Quelle fonction permet de retourner très simplement toutes ces statistiques ?
+> **Question** : Pour chaque échantillon, indiquez les statistiques simples sur les valeurs de comptages (moyenne, médiane, min, max, 1er et 3ème quartiles). Quelle fonction permet de retourner très simplement toutes ces statistiques ? Que remarquez-vous ?
 
-```{r summary, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r summary, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
 summary(comptage)
 ```
 
 
-
 **3. Normalisation **
-
 
 Un biais important en RNA-seq est la profondeur de séquençage de chaque échantillon, aussi appelée taille de la librairie.
 
 > **Question** : Représentez en barplot la taille de librairie de chaque échantillon. Adaptez la couleur des barplot en fonction de la `condition` ( 1 couleur par `condition`). Existe-t-il un biais dans cette expérience ? Lequel ?
 
-```{r librarySize, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r librarySize, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 barplot(colSums(comptage), main="Library Size", ylab = "# counts", col = as.numeric(design$condition))
 ```
 
@@ -122,15 +118,14 @@ Pour corriger ce biais, nous allons normaliser les données. La taille de la lib
 
 > **Question** : Chargez en mémoire le fichier de comptages normalisés `counts_normalized.txt`.
 
-```{r normcount, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r normcount, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 normcount = read.table("counts_normalized.txt", sep="\t", header=TRUE)
 ```
-
 
 > **Question** : Afin d'observer l'effet de la normalisation sur les données, représenter sous forme de boxplot les données avant et après normalisation.  
 Représentez ces 2 graphiques sur une même fenêtre.
 
-```{r boxplot, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r boxplot, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 par(mfrow=c(1,2))
 boxplot(comptage, main="Avant normalisation")
 boxplot(normcount, main="Après normalisation")
@@ -139,7 +134,7 @@ boxplot(normcount, main="Après normalisation")
 
 > **Question** : Afin d'avoir une meilleure représentation des données, transformez les matrices de comptages non normalisés et normalisés en log2 (fonction `log2`). Représentez une nouvelle fois les 2 boxplots, après transformation des valeurs en log2.
 
-```{r boxplotlog, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r boxplotlog, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 comptagelog = log2(comptage)
 normcountlog = log2(normcount)
 par(mfrow=c(1,2))
@@ -149,11 +144,11 @@ boxplot(normcountlog, main="Après normalisation", ylab = "log2(count)")
 
 En RNA-seq, il est courant d'avoir des valeurs de comptages à 0, ce qui correspond à des gènes non exprimés.
 
-> **Question** : A partir de la matrice de comptage normalisés, affichez un graphique représentant le nombre de gènes ayant des comptages nuls en fonction des échantillons. Que remarquez-vous ?
+> **Question** : A partir de la matrice de comptage normalisés, affichez un graphique représentant le nombre de gènes ayant des comptages nuls en fonction des échantillons (utlisez le meme code couleur por les echantillons que precedemment) . Que remarquez-vous ?
 
-```{r gene0, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r gene0, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 nbZero = apply(normcount,2,function(r){length(which(r == 0)) })
-plot(nbZero, main="Nombre de gènes non exprimés par échantillon", xlab = "Echantillons", ylab="Nb gènes = 0", pch=16)
+plot(nbZero, main="Nombre de gènes non exprimés par échantillon", xlab = "Echantillons", ylab="Nb gènes = 0", pch=16, col = as.numeric(design$condition))
 ```
 
 
@@ -161,7 +156,7 @@ plot(nbZero, main="Nombre de gènes non exprimés par échantillon", xlab = "Ech
 Transformez cette matrice en log2. Quelle est la valeur minimale par échantillon ? Pourquoi ?  
 Afin d'éviter cette valeur, gênante pour la suite des analyses, nous allons ajouter un pseudocount de 1 avant de passer en log2. Crée cette nouvelle matrice.
 
-```{r geneAll0, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r geneAll0, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE}
 normcount0 = normcount[ rowSums(normcount) > 0, ]
 dim(normcount0)
 normcount0log = log2(normcount0)
@@ -172,6 +167,7 @@ normcount0log = log2(normcount0 + 1 )
 Pour la suite du TP, nous travaillerons uniquement sur cette nouvelle matrice de comptages, c'est à dire la matrice de comptages normalisés, en log2, sans les gènes non exprimés chez tous les échantillons.
 
 
+
 **4. Analyse non supervisée **  
 
 
@@ -179,14 +175,14 @@ Nous allons visualiser la proximité relative des observations, grâce à une __
 
 > **Question** :  
 
-> * Transposez votre matice de comptage grâce à la fonction `t()`.  
-> * Calculez les composantes grâce à la fonction `prcomp` avec les options `scale=TRUE` et `center=TRUE`. Combien y a-t-il de composantes ? 
-> * Représentez graphiquement les observations, c'est à dire les échantillons, en fonction des deux premières composantes, colorez les points en fonction de la colonne "condition" et changez la taille des points (paramètre `cex` de la fonction `plot`) en fonction du nombre de gènes non exprimés du tableau de données. 
-> * Ajoutez le noms des échantillons sur le graphique généré (fonction `text()`)  
+> * Transposez votre matice de comptage grâce à la fonction `t()`.
+> * Calculez les composantes grâce à la fonction `prcomp` avec les options `scale=TRUE` et `center=TRUE`. Combien y a-t-il de composantes ?
+> * Représentez graphiquement les observations, c'est à dire les échantillons, en fonction des deux premières composantes, colorez les points en fonction de la colonne "condition" et changez la taille des points (paramètre `cex` de la fonction `plot`) en fonction du nombre de gènes non exprimés du tableau de données.
+> * Ajoutez le noms des échantillons sur le graphique généré (fonction `text()`)
 > * Ajoutez les lignes x=0 et y=0 en pointillé.
 > * Interprétez cette ACP.
 
-```{r acp, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r acp, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 
 acp = prcomp(t(normcount0log),center = TRUE, scale = TRUE)
 nbZero = apply(normcount0log,2,function(r){length(which(r == 0)) })
@@ -207,7 +203,7 @@ Il est possible de visualiser la proximité relative des observations, grâce à
 > * Interprétez ce clustering.
 
 
-```{r cluster, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE, results='asis'}
+```{r cluster, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 library(pheatmap)
 library(RColorBrewer)
 sampledist = dist(t(normcount0log))
@@ -218,8 +214,5 @@ rownames(annot) = design$sampleName
 colnames(annot) = "condition"
 pheatmap(sampledistMatrix,col=colors, annotation_col = annot)
 ```
-
-
-
 
 
