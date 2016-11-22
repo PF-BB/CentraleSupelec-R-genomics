@@ -12,6 +12,6 @@ Ces données ont été utilisées dans les 2 articles suivants :
 Le but de cette session est de vous présenter les étapes clefs de pré-traitement de données RNA-seq, puis de vous faire découvrir, à traver l'outil R, comment manipuler ce type de données.
 
 
-* Présentation des données:   :download:`slides  <TP2/TP2.pptx>`
-* Exercices :   :download:`exercices  <TP2/TP2_exercides.pdf>`
-* Données à télécharger :  :download:`TP2_data.zip <TP2/data.zip>`
+* Présentation des données:   :download:`slides  <TP2/TP2_2061124.pptx>`
+* Exercices :   :download:`exercices  <TP2/TP2_exercices.pdf>`
+* Données à télécharger :  :download:`TP2_data.zip <TP2/data_TP2.zip>`
