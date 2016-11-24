@@ -42,10 +42,10 @@ Ce TP nécessite le chargement de 2 packages :
 install.packages("pheatmap")
 ```
 
-- package RColorBrewser
+- package RColorBrewer
 
 ```{r echo  =TRUE, eval = FALSE}
-install.packages("RColorBrewser")
+install.packages("RColorBrewer")
 ```
 
 
@@ -144,7 +144,7 @@ boxplot(normcountlog, main="Après normalisation", ylab = "log2(count)")
 
 En RNA-seq, il est courant d'avoir des valeurs de comptages à 0, ce qui correspond à des gènes non exprimés.
 
-> **Question** : A partir de la matrice de comptage normalisés, affichez un graphique représentant le nombre de gènes ayant des comptages nuls en fonction des échantillons (utlisez le meme code couleur por les echantillons que precedemment) . Que remarquez-vous ?
+> **Question** : A partir de la matrice de comptage normalisés, affichez un graphique représentant le nombre de gènes ayant des comptages nuls en fonction des échantillons (utilisez le meme code couleur pour les échantillons que précedemment) . Que remarquez-vous ?
 
 ```{r gene0, echo=FALSE, eval=FALSE, warning=FALSE, message=FALSE, results='asis'}
 nbZero = apply(normcount,2,function(r){length(which(r == 0)) })
@@ -192,7 +192,7 @@ abline(v=0, h=0, lty=2)
 ```
 
 
-Il est possible de visualiser la proximité relative des observations, grâce à une autre méthode : __le clustering__. Cette methode consiste à calculer une distance entre les profils transcriptomique, puis à les regrouper de proche en proche. Il existe de nombreuses méthodes pour calculer une distance entre deux profils (distance Euclidienne, disante de Manahatan ...) et de nombreuses méthode pour agréger les profils les plus semblables entre eux.
+Il est possible de visualiser la proximité relative des observations, grâce à une autre méthode : __le clustering__. Cette methode consiste à calculer une distance entre les profils transcriptomique, puis à les regrouper de proche en proche. Il existe de nombreuses méthodes pour calculer une distance entre deux profils (distance Euclidienne, distance de Manhatan ...) et de nombreuses méthodes pour agréger les profils les plus semblables entre eux.
 
 > **Question** : 
 
@@ -214,5 +214,3 @@ rownames(annot) = design$sampleName
 colnames(annot) = "condition"
 pheatmap(sampledistMatrix,col=colors, annotation_col = annot)
 ```
-
-
