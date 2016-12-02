@@ -30,7 +30,7 @@ Ces données ont été utilisées dans les 2 articles suivants :
 * J.Eswaran et al. Transcriptomic landscape of breast cancers through mRNA sequencing. Scientific Report (2012) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
 * J.Eswaran et al. RNA sequencing of cancer reveals novel splicing alterations. Scientific Report (2013) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
 
-Afin d'obetnir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, et alignées sur le génome de référence humain hg19 avec l'outil STAR. Puis la quantification a été faite avec l'outil `feature-count`. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les individus. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
+Afin d'obtenir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, et alignées sur le génome de référence humain hg19 avec l'outil STAR. Puis la quantification a été faite avec l'outil `feature-count`. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les individus. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
 
 # Pré-requis
 

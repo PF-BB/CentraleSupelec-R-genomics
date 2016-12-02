@@ -1,0 +1,48 @@
+--- 
+title: "TP3" 
+author: 
+- Justine Guégan - j.guegan-ihu@icm-institute.org 
+- Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
+date: "24 novembre 2016" 
+output: pdf_document 
+header- includes: 
+- \usepackage{nicefrac} 
+- \usepackage{graphicx} 
+- \newcommand{\cor}{cor} 
+---
+
+Les données nécessaires à cette séance se trouvent sur le site web :
+
+https://pf-bb.github.io/CentraleSupelec-R-genomics/TP2.html.
+
+# Objectif
+
+L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. 
+
+Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
+
+# Données
+
+Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (épithelium) ont été séquencés par Illumina HiSeq2000. Les données brutes sont disponibles sur le site **Sequence Reads Archive** (SRA), hebergé au NCBI, sous la référence [SRP032789](ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP032/SRP032789/). 
+
+Ces données ont été utilisées dans les 2 articles suivants : 
+
+* J.Eswaran et al. Transcriptomic landscape of breast cancers through mRNA sequencing. Scientific Report (2012) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
+* J.Eswaran et al. RNA sequencing of cancer reveals novel splicing alterations. Scientific Report (2013) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
+
+Afin d'obtenir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, et alignées sur le génome de référence humain hg19 avec l'outil STAR. Puis la quantification a été faite avec l'outil `feature-count`. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les individus. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
+
+
+# Analyse des données
+
+**1. Lecture des fichiers de données **
+
+> **Question** : Chargez en mémoire la table de comptage créer lors du TP2 (fichier `counts_normalized.txt`) et la description des échantillons (fichier `annot_sample.txt`). (Il s'agit ici de la matrice de comptage débarassée des gènes qui ne sont jamais exprimés dans tous les échantillons).
+
+**2. Comprehension des données **
+
+> **Question** : Donnez une définition brève des 3 sous-types de cancer du sein (HER2, TNBC, nonTNBC). Pour chacun de ces sous-types, identifier une liste de gènes caractéristiques de ces tumeurs.
+
+
+
+
