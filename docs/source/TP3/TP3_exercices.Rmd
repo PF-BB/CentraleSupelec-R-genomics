@@ -84,6 +84,23 @@ barplot(c(nbUp, nbDn), col = c("red", "green"))
 * Non-TNBC versus Normal
 * HER2 vesus Normal
 
+```{r echo = FALSE, eval = FALSE}
+
+idxT = which(annot$Status == "TNBC")
+idxN = which(annot$Status == "Normal")
+fc_tumoral.tnbc = apply(count[,idxT], 1,mean)
+fc_normal  = apply(count[,idxN], 1,mean)
+fc_t.tnbcvsn = fc_tumoral.tnbc / fc_normal
+lfc_t.tnbcvsn = log2(fc_t.tnbcvsn)
+
+nbUp = length(which(lfc_tvsn >= 1))
+nbDn = length(which(lfc_tvsn <= -1))
+barplot(c(nbUp, nbDn), col = c("red", "green"))
+
+
+```
+
+
 
 
 
