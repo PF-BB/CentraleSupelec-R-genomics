@@ -17,104 +17,206 @@ https://pf-bb.github.io/CentraleSupelec-R-genomics/TP2.html.
 
 # Objectif
 
-L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. Il s'agit ici de mener une analyse différentielle des données de séquencage. Cette analyse différentielle permettra de mettre en évidence quels gènes sont différentiellement exprimés entre les différents groupes de tissus (les trois sous-type de cancer du sein, et du tissus normal).
+L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. Il s'agit ici de mener une analyse différentielle des données de séquencage. Cette analyse différentielle permettra de mettre en évidence quels gènes sont différentiellement exprimés entre les différents sous-type de cancer du sein, et du tissu normal.
 
 Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
 
 # Données
 
-Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (épithelium) ont été séquencés par Illumina HiSeq2000. Les données brutes sont disponibles sur le site **Sequence Reads Archive** (SRA), hebergé au NCBI, sous la référence [SRP032789](ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP032/SRP032789/). 
-
-Ces données ont été utilisées dans les 2 articles suivants : 
-
-* J.Eswaran et al. Transcriptomic landscape of breast cancers through mRNA sequencing. Scientific Report (2012) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
-* J.Eswaran et al. RNA sequencing of cancer reveals novel splicing alterations. Scientific Report (2013) [article](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3631769/?tool=EBI)
-
-Afin d'obtenir la table d'expression utilisée dans ce TP, les données brutes (fastq) ont préalablement été nettoyées, et alignées sur le génome de référence humain hg19 avec l'outil STAR. Puis la quantification a été faite avec l'outil `feature-count`. Cet outil génère un tableau avec en ligne les gènes, et en colonnes les individus. On y retrouve l'annotation des gènes ainsi que les valeurs d'expression brutes, aussi appelées "comptages".
-
+Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (NBS) ont été séquencés par Illumina HiSeq2000. 
 
 # Analyse des données
 
+Lors du TP précedent, vous aviez utilisé une matrice de comptage brute, que vous aviez nettoyé afinde supprimer les gènes qui ne s'expriment dans aucun échantillons. Nous vous proposons de reprendre les analyses à ce stade. 
+
 **1. Lecture des fichiers de données **
 
-> **Question** : Chargez en mémoire la table de comptage créer lors du TP2 (fichier `counts_normalized.txt`) et la description des échantillons (fichier `annot_sample.txt`). (Il s'agit ici de la matrice de comptage débarrassée des gènes qui ne sont jamais exprimés dans tous les échantillons).
+> **Question** : Chargez en mémoire la table de comptage créée lors du TP2 (fichier `counts_normalized.txt`). Quelle est la classe de l'objet créé ? Transformez le en matrice. Chargez en mémoire le fichier de description des échantillons (fichier `annot_sample.txt`).
 
 ```{r}
-count = read.delim("data_TP3/counts_normalized.txt")
-gene.name = count$GeneID
-count = count[,-1]
+count = read.delim("data_TP3/counts_normalized.txt", sep="\t", row.names = 1)
 count = as.matrix(count)
-rownames(count) = gene.name
 annot = read.delim("data_TP3/annot_sample.txt")
 ```
 
 
-**2. Calcul du log Fold-change **
+**2. Création des `MA-plot` **
 
-La définition du *Fold-Change* (FC) est la suivante : il s'agit du ratio de la moyenne des valeurs d'expressions entre deux groupes d'intérêt. Ce FC se calcule sans la transformation logarithmique. Si on note, pour une sonde $j$ donnée, $\bar x_1$ la moyenne du groupe 1 et $\bar x_2$ la moyenne du groupe 2, alors le FC de la sonde $j$ vaut 
+Les MAPlots sont des figures présentant de façon synthètique une comparaison de 2 conditions. En ordonnées, on represente la valeur **M**, qui correspond au log Fold-Change (logFC) et en abscisse, la valeur **A**, qui correspond au log2 de la moyenne des comptages normalisés :
+
+\[M = log2(\frac{\bar m_1}{\bar m_2})\]
+
+
+\[A = log2( ({\bar m_1} + {\bar m_2})/2 )\]
+
+
+La définition du *Fold-Change* (FC) est la suivante : il s'agit du ratio de la moyenne des valeurs d'expressions entre deux groupes d'intérêt. Ce FC se calcule sans la transformation logarithmique. Si on note, pour un gène $j$ donné, $\bar x_1$ la moyenne du groupe 1 et $\bar x_2$ la moyenne du groupe 2, alors le FC du gène $j$ vaut :
+
 \[FC_j = \frac{\bar x_1}{\bar x_2}.\]
 
 On préfère, pour des raisons pratiques, raisonner sur le *log Fold-Change* (logFC), qui est simplement obtenu en prenant le logarithme naturel du FC. Ainsi : 
 
- * si $log(FC_j) > \kappa$, on dit que le transcrit correspondant à la sonde $j$ est sur-exprimé dans le groupe 1 par rapport au groupe 2,
- * si $log(FC_j) < -\kappa$, on dit que le transcrit correspondant à la sonde $j$ est sous-exprimé dans le groupe 1 par rapport au groupe 2,
+ * si $log(FC_j) > \kappa$, on dit que le gène $j$ est sur-exprimé dans le groupe 1 par rapport au groupe 2,
+ * si $log(FC_j) < -\kappa$, on dit que le gène $j$ est sous-exprimé dans le groupe 1 par rapport au groupe 2,
  
 avec $\kappa$ une certaine valeur seuil[^1], qui dépend beaucoup de l'expérience. Habituellement, on choisit $\kappa=1$ car cela signifie que la valeur moyenne d'expression est deux fois plus (resp. moins) grande dans un groupe que dans l'autre.
 
 [^1]: Attention, cette notation de $\kappa$ pour un seuil de logFC n'est pas universelle, elle est même spécifique de cet énoncé TP. Si vous choisissez d'appeler le seuil ainsi dans votre rapport, n'oubliez pas de le préciser !
 
-> **Question** : Calculer le logFC du groupe `Tumoral` par rapport au groupe `normal`. A l'aide d'un diagramme en baton, représentez le nombre de gènes sur- (en rouge) et sous-exprimés (en vert) dans le groupe `Tumoral` par rapport au groupe `normal` (utiliser un seuil de 1).
+> **Question** : Calcul de la valeur **M**.
 
-```{r eval = FALSE, echo = FALSE}
-idxT = which(annot$Status == "Tumoral")
-idxN = which(annot$Status == "Normal")
-fc_tumoral = apply(count[,idxT], 1,mean)
-fc_normal  = apply(count[,idxN], 1,mean)
-fc_tvsn = fc_tumoral / fc_normal
-lfc_tvsn = log2(fc_tvsn)
+> Calculer le logFC pour le contraste suivant : HER2 versus NBS.
 
-nbUp = length(which(lfc_tvsn >= 1))
-nbDn = length(which(lfc_tvsn <= -1))
-barplot(c(nbUp, nbDn), col = c("red", "green"))
+```{r M for HER2}
+
+idxHER2 = which(annot$condition == "HER2")
+idxNBS  = which(annot$condition == "NBS")
+m_HER2 = apply(count[,idxHER2], 1, mean)
+m_NBS  = apply(count[,idxNBS ], 1, mean)
+fc  = m_HER2 / m_NBS
+lfc = log2(fc)
 ```
 
-> **Question** : De la même façon que pour la question précédentes, calculez le logFC entre les contrastes suivants :
+> De la même façon, calculez les logFC pour les contrastes suivants : 
 
-* TNBC versus Normal
-* Non-TNBC versus Normal
-* HER2 vesus Normal
+> * TNBC versus NBS
+> * Non-TNBC versus NBS
 
-```{r echo = FALSE, eval = FALSE}
+> il serait judicieux ici de créer une fonction `computeFC` vous permettant d'automatiser cette suite
+d'opération, qui prendrait comme parametre d'entrée les éléments suivants : 
 
-idxT = which(annot$Status == "TNBC")
-idxN = which(annot$Status == "Normal")
-fc_tumoral.tnbc = apply(count[,idxT], 1,mean)
-fc_normal  = apply(count[,idxN], 1,mean)
-fc_t.tnbcvsn = fc_tumoral.tnbc / fc_normal
-lfc_t.tnbcvsn = log2(fc_t.tnbcvsn)
+> * `condition` : le vecteur de description de la `condition` des échantillons
+> * `count` : une matrice de comptage 
+> * `label.grp1` : le label du groupe 1
+> * `label.grp2` : le label du groupe 2
 
-nbUp = length(which(lfc_tvsn >= 1))
-nbDn = length(which(lfc_tvsn <= -1))
-barplot(c(nbUp, nbDn), col = c("red", "green"))
+```{r log2FC all contrastes,  echo = FALSE, eval = TRUE}
 
+computeFC = function( condition, count, label.grp1, label.grp2){
+
+  idx1 = which( condition == label.grp1)
+  idx2 = which( condition == label.grp2)
+  
+  m1 = apply(count[,idx1], 1,mean)
+  m2 = apply(count[,idx2], 1,mean)
+
+  fc = m1 / m2
+  lfc = log2(fc)
+  return(lfc)
+}
+
+lfc_TNBC_vs_NBS    = computeFC(annot$condition, count, "TNBC", "NBS")
+lfc_NonTNBC_vs_NBS = computeFC(annot$condition, count, "Non-TNBC", "NBS")
+lfc_HER2_vs_NBS    = computeFC(annot$condition, count, "HER2", "NBS")
+```
+
+
+> **Question** : Calcul de la valeur **A**.
+
+> Creez une fonction `computeMean` calculant la valeur 'A'. Cette fonction prend comme entré les paramètres suivants :
+
+> * `condition` : le vecteur de description de la `condition` des échantillons
+> * `count` : une matrice de comptage 
+> * `label.grp1` : le label du groupe 1
+> * `label.grp2` : le label du groupe 2
+
+```{r}
+computeMean = function( condition, count, label.grp1, label.grp2){
+  idx1 = which( condition == label.grp1)
+  idx2 = which( condition == label.grp2)
+  m = apply(count[,c(idx1, idx2)], 1,mean)
+  return(log2(m))
+}
+```
+
+> **Question** : Afficher les MA-plots.
+
+> Representez les MAplots des contrastes suivants : 
+
+> * TNBC versus NBS
+> * Non-TNBC versus NBS
+> * HER2 vesus NBS
+
+> Ajouter une ligne rouge à y = 0 et interpretez ces figures.
+
+```{r}
+m_TNBC_vs_NBS    = computeMean(annot$condition, count, "TNBC", "NBS")
+m_NonTNBC_vs_NBS = computeMean(annot$condition, count, "Non-TNBC", "NBS")
+m_HER2_vs_NBS    = computeMean(annot$condition, count, "HER2", "NBS")
+
+plot(m_TNBC_vs_NBS,lfc_TNBC_vs_NBS, pch = 16, cex = 0.7)
+abline(h=0, col="red", lwd = 2)
+
+plot(m_NonTNBC_vs_NBS,lfc_NonTNBC_vs_NBS, pch = 16, cex = 0.7)
+abline(h=0, col="red", lwd = 2)
+
+plot(m_HER2_vs_NBS,lfc_HER2_vs_NBS, pch = 16, cex = 0.7)
+abline(h=0, col="red", lwd = 2)
 
 ```
 
 
 
+**3. Analyse différentielle **
+
+Un gène est déclaré différentiellement exprimé si une différence observée ou un changement d'expression entre deux conditions expérimentales est significativement statistique, c'est-à-dire plus grande que la valeur attendue.
+
+Nous avons précedemment calculé les logFC, il faut donc calculer les p-values associées à ces logFC.
+
+Lorsque l’on fait un test d’hypothèses, une manière synthétique de représenter le résultat du test est la p-value (moins couramment appelée valeur p). Par définition, la p-value obtenue représente la probabilité sous hypothèse nulle d’obtenir une statistique encore plus atypique que celle obtenue à la suite de notre expérience.
 
 
+A partir du calcul de la p-value, la conclusion d’un test d’hypothèses se déroule comme suit :
+
+* si la p-value est en dessous du seuil de rejet que j’ai choisi (habituellement : 0.05), je rejette l’hypothèse nulle,
+* sinon, je ne peux pas rejeter l’hypothèse nulle.
+
+> **Question** : Transformez la matrice `count` en `countLog2`. Calculez, pour tous les gènes (ie les lignes de `countLog2`), les p-values d’un test de Student comparant les deux moyennes des groupes HER2 et NBS en utilisant la fonction t.test et ses paramètres par défaut. Combien de ces p-values sont-elles en dessous du seuil classique de 0.05 ?
 
 
+```{r t-test}
+idxHER2 = which(annot$condition == "HER2")
+idxNBS  = which(annot$condition == "NBS")
+
+pv = c()
+for (i in 1:nrow(countLog2)){
+  tt = t.test( countLog2[i,idxHER2], countLog2[i,idxNBS])
+  pv = c(pv, tt$p.value)
+}
+```
 
 
+** 4. Correction pour les test multiples **
+
+Les tests d’hypothèses n’ont pas été créés dans l’optique d’être utilisés plus de 20 000 fois de façon successive : si on suit la procédure habituelle, on risque de rejeter l’hypothèse nulle à tort beaucoup trop souvent. La conséquence immédiate et néfaste de ces tests multiples est d’augmenter artificiellement le nombre de gènes différentiellement exprimés.
+Une correction pour les tests multiples est donc nécessaire. La procédure la plus simple est de diminuer le seuil de rejet (c’est la procédure dite de Bonferroni). Nous allons utiliser dans ce TP la procédure qui est utilisée classiquement en transcriptomique : la procédure de Benjamini-Hochberg.
+
+> **Question** : Utilisez sur le vecteur des p-values calculées précédemment la procédure p.adjust en attribuant à l’argument method la valeur "BH". Après correction, combien de p-values ajustées se trouvent en dessous du seuil de 0.05 ?
+
+```{r}
+p.adj = p.adjust(pv, method = "BH")
+```
 
 
+** 5. Représentations graphiques et conclusion **
 
+Une liste de gènes différentiellement exprimés est caractérisée par deux seuils :
 
-> **Question** : Donnez une définition brève des 3 sous-types de cancer du sein (HER2, TNBC, nonTNBC). Pour chacun de ces sous-types, identifier une liste de gènes caractéristiques de ces tumeurs.
+* un seuil sur le log Fold-Change,
+* un seuil sur la p-value corrigée
 
+> ** Question** : Combien de sondes passent un seuil en logFC de 1 et un seuil sur la p-value
+ajustée de 0.05 pour les 3 contrastes suivants : 
 
+> * TNBC versus NBS
+> * Non-TNBC versus NBS
+> * HER2 vesus NBS
 
+Une première représentation graphique permettant de synthétiser ce résultat est une représentation dite en volcan : il s’agit de représenter, pour toutes les sondes, un graphe bivarié, avec en abscisse le logFC et en ordonnée −log10(p-value ajustée).
+
+> **Question** : Faites une représentation en volcan de votre analyse différentielle (avec la fonction plot). Représentez sur ce graphe les seuils sur le logFC et la p-value ajustée (avec la fonction abline). Représentez de deux couleurs différentes les sondes sur- et sous-exprimées (avec l’argument col de la fonction plot). 
+
+> **Question** : Enfin, représentez à l’aide de la fonction pheatmap une représentation des mesures d’expression (contenue dans la matrice X) uniquement pour les transcrits différentiellement exprimés, et dont la légende contient les informations contenues dans le fichier d'annotations. Utilisez l'option `scale='row'`
+. Interprétez la figure.
 
 
