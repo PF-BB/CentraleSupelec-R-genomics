@@ -1,5 +1,5 @@
 --- 
-title: "TP3" 
+title: "TP3 Analyse differentielle" 
 author: 
 - Justine Guégan - j.guegan-ihu@icm-institute.org 
 - Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
@@ -17,7 +17,7 @@ https://pf-bb.github.io/CentraleSupelec-R-genomics/TP2.html.
 
 # Objectif
 
-L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. 
+L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. Il s'agit ici de mener une analyse différentielle des données de séquencage. Cette analyse différentielle permettra de mettre en évidence quels gènes sont différentiellement exprimés entre les différents groupes de tissus (les trois sous-type de cancer du sein, et du tissus normal).
 
 Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
 
@@ -37,11 +37,66 @@ Afin d'obtenir la table d'expression utilisée dans ce TP, les données brutes (
 
 **1. Lecture des fichiers de données **
 
-> **Question** : Chargez en mémoire la table de comptage créer lors du TP2 (fichier `counts_normalized.txt`) et la description des échantillons (fichier `annot_sample.txt`). (Il s'agit ici de la matrice de comptage débarassée des gènes qui ne sont jamais exprimés dans tous les échantillons).
+> **Question** : Chargez en mémoire la table de comptage créer lors du TP2 (fichier `counts_normalized.txt`) et la description des échantillons (fichier `annot_sample.txt`). (Il s'agit ici de la matrice de comptage débarrassée des gènes qui ne sont jamais exprimés dans tous les échantillons).
 
-**2. Comprehension des données **
+```{r}
+count = read.delim("data_TP3/counts_normalized.txt")
+gene.name = count$GeneID
+count = count[,-1]
+count = as.matrix(count)
+rownames(count) = gene.name
+annot = read.delim("data_TP3/annot_sample.txt")
+```
+
+
+**2. Calcul du log Fold-change **
+
+La définition du *Fold-Change* (FC) est la suivante : il s'agit du ratio de la moyenne des valeurs d'expressions entre deux groupes d'intérêt. Ce FC se calcule sans la transformation logarithmique. Si on note, pour une sonde $j$ donnée, $\bar x_1$ la moyenne du groupe 1 et $\bar x_2$ la moyenne du groupe 2, alors le FC de la sonde $j$ vaut 
+\[FC_j = \frac{\bar x_1}{\bar x_2}.\]
+
+On préfère, pour des raisons pratiques, raisonner sur le *log Fold-Change* (logFC), qui est simplement obtenu en prenant le logarithme naturel du FC. Ainsi : 
+
+ * si $log(FC_j) > \kappa$, on dit que le transcrit correspondant à la sonde $j$ est sur-exprimé dans le groupe 1 par rapport au groupe 2,
+ * si $log(FC_j) < -\kappa$, on dit que le transcrit correspondant à la sonde $j$ est sous-exprimé dans le groupe 1 par rapport au groupe 2,
+ 
+avec $\kappa$ une certaine valeur seuil[^1], qui dépend beaucoup de l'expérience. Habituellement, on choisit $\kappa=1$ car cela signifie que la valeur moyenne d'expression est deux fois plus (resp. moins) grande dans un groupe que dans l'autre.
+
+[^1]: Attention, cette notation de $\kappa$ pour un seuil de logFC n'est pas universelle, elle est même spécifique de cet énoncé TP. Si vous choisissez d'appeler le seuil ainsi dans votre rapport, n'oubliez pas de le préciser !
+
+> **Question** : Calculer le logFC du groupe `Tumoral` par rapport au groupe `normal`. A l'aide d'un diagramme en baton, représentez le nombre de gènes sur- (en rouge) et sous-exprimés (en vert) dans le groupe `Tumoral` par rapport au groupe `normal` (utiliser un seuil de 1).
+
+```{r eval = FALSE, echo = FALSE}
+idxT = which(annot$Status == "Tumoral")
+idxN = which(annot$Status == "Normal")
+fc_tumoral = apply(count[,idxT], 1,mean)
+fc_normal  = apply(count[,idxN], 1,mean)
+fc_tvsn = fc_tumoral / fc_normal
+lfc_tvsn = log2(fc_tvsn)
+
+nbUp = length(which(lfc_tvsn >= 1))
+nbDn = length(which(lfc_tvsn <= -1))
+barplot(c(nbUp, nbDn), col = c("red", "green"))
+```
+
+> **Question** : De la même façon que pour la question précédentes, calculez le logFC entre les contrastes suivants :
+
+* TNBC versus Normal
+* Non-TNBC versus Normal
+* HER2 vesus Normal
+
+
+
+
+
+
+
+
+
+
+
 
 > **Question** : Donnez une définition brève des 3 sous-types de cancer du sein (HER2, TNBC, nonTNBC). Pour chacun de ces sous-types, identifier une liste de gènes caractéristiques de ces tumeurs.
+
 
 
 
