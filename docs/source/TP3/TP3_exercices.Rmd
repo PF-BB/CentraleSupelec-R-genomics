@@ -3,7 +3,7 @@ title: "TP3 Analyse differentielle"
 author: 
 - Justine Guégan - j.guegan-ihu@icm-institute.org 
 - Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
-date: "24 novembre 2016" 
+date: "08 décembre 2016" 
 output: pdf_document 
 header- includes: 
 - \usepackage{nicefrac} 
@@ -33,7 +33,7 @@ Lors du TP précedent, vous aviez utilisé une matrice de comptage brute, que vo
 
 > **Question 1.1** : Chargez en mémoire la table de comptage créée lors du TP2 (fichier `counts_normalized.txt`). Quelle est la classe de l'objet créé ? Transformez le en matrice. Chargez en mémoire le fichier de description des échantillons (fichier `annot_sample.txt`).
 
-```{r Q1.1 input data file , eval = TRUE, echo = FALSE}
+```{r Q1.1 input data file , eval = FALSE, echo = FALSE}
 count = read.delim("data_TP3/counts_normalized.txt", sep="\t", row.names = 1)
 count = as.matrix(count)
 annot = read.delim("data_TP3/annot_sample.txt")
@@ -78,7 +78,7 @@ Créez une fonction `computeMean` permettant de calculer, pour tous les gènes, 
 
 Cette fonction retourne un vecteur contenant les moyennes d'expressions pour l'ensemble des gènes de la matrice de comtage.
 
-```{r Q2.1 computeMean, eval = TRUE, echo = FALSE}
+```{r Q2.1 computeMean, eval = FALSE, echo = FALSE}
 computeMean = function( condition, count, label.grp){
   idx = which( condition == label.grp)
   if (length(idx) > 0){
@@ -100,10 +100,9 @@ Afficher les MA-plots pour les groupes suivants :
 * TNBC versus NBS
 * Non-TNBC versus NBS
 
-Poour chaque graphique, ajouter une ligne rouge à y = 0, et deux lignes bleu, respectivement à y = -1, et y = 1. Afficher le titre du graphique, ainsi que le nom des axes.
-Interpretez ces figures. Que representent les gènes situés au dessus de la ligne y = 1 ? Que representent les gènes situés au dessous de la ligne y = -1 ?
+> Pour chaque graphique, ajouter une ligne rouge à y = 0, et deux lignes bleu, respectivement à y = -1, et y = 1. Afficher le titre du graphique, ainsi que le nom des axes. Interpretez ces figures. Que representent les gènes situés au dessus de la ligne y = 1 ? Que representent les gènes situés au dessous de la ligne y = -1 ?
 
-```{r Q2.2 MA-plots, echo = FALSE, eval = TRUE}
+```{r Q2.2 MA-plots, echo = FALSE, eval = FALSE}
 m_nbs   = computeMean(annot$condition, count, "NBS")
 m_her2  = computeMean(annot$condition, count, "HER2")
 m_tnbc  = computeMean(annot$condition, count, "TNBC")
@@ -142,7 +141,7 @@ A partir du calcul de la p-value, la conclusion d’un test d’hypothèses se d
 > **Question 3.1** : Transformez la matrice `count` en `countLog2`. Calculez, pour tous les gènes (ie les lignes de `countLog2`), les p-values d’un test de Student comparant les deux moyennes des groupes HER2 et NBS en utilisant la fonction t.test et ses paramètres par défaut. Combien de ces p-values sont-elles en dessous du seuil classique de 0.05 ?
 
 
-```{r Q3.1 t-test HER2_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.1 t-test HER2_NBS, echo = FALSE, eval = FALSE}
 
 countLog2 = log2(count)
 idxHER2 = which(annot$condition == "HER2")
@@ -162,14 +161,14 @@ length(which(pv <= 0.05))
 Une correction pour les tests multiples est donc nécessaire. La procédure la plus simple est de diminuer le seuil de rejet (c’est la procédure dite de Bonferroni). Nous allons utiliser dans ce TP la procédure qui est utilisée classiquement en transcriptomique : la procédure de Benjamini-Hochberg.
 Utilisez sur le vecteur des p-values calculées précédemment la procédure `p.adjust` en attribuant à l’argument method la valeur "BH". Après correction, combien de p-values ajustées se trouvent en dessous du seuil de 0.05 ?
 
-```{r Q3.2 correction test multiple, echo = FALSE, eval = TRUE}
+```{r Q3.2 correction test multiple, echo = FALSE, eval = FALSE}
 p.adj = p.adjust(pv, method = "BH")
 length(which(p.adj <= 0.05))
 ```
 
 > **Question 3.3** : Répétez les questions 3.1 et 3.2 pour les contrastes "TNBC vs NBS", et "Non-TNBC vs NBS"
 
-```{r Q3.3 t-test TNBC_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.3 t-test TNBC_NBS, echo = FALSE, eval = FALSE}
 
 countLog2 = log2(count)
 idxTNBC = which(annot$condition == "TNBC")
@@ -187,7 +186,7 @@ p.adj = p.adjust(pv, method = "BH")
 length(which(p.adj <= 0.05))
 ```
 
-```{r Q3.3 t-test Non-TNBC_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.3 t-test Non-TNBC_NBS, echo = FALSE, eval = FALSE}
 
 countLog2 = log2(count)
 idxNTNBC = which(annot$condition == "Non-TNBC")
@@ -219,7 +218,7 @@ ajustée de 0.05 pour les 3 contrastes suivants :
 > * Non-TNBC versus NBS
 > * HER2 vesus NBS
 
-```{r Q4.1}
+```{r Q4.1, echo = FALSE, eval = FALSE}
 countLog2 = log2(count)
 
 m_nbs   = computeMean(annot$condition, count, "NBS")
@@ -266,7 +265,7 @@ length(intersect( which(p.adj_NTNBC_NBS <= 0.05), which(abs(M_NTNBC_vs_NBS) >= 1
 
 > **Question 4.2** : Une première représentation graphique permettant de synthétiser ce résultat est une représentation dite en volcan : il s’agit de représenter, pour toutes les sondes, un graphe bivarié, avec en abscisse le logFC et en ordonnée -log10(p-value ajustée) (ou -log10(p.value)). Faites une représentation en volcan de votre analyse différentielle (avec la fonction plot). Représentez sur ce graphe les seuils sur le logFC et la p-value ajustée (avec la fonction abline). Représentez de deux couleurs différentes les sondes sur- et sous-exprimées (avec l’argument col de la fonction plot). 
 
-```{r Q4.2 volcano-plot}
+```{r Q4.2 volcano-plot, echo = FALSE, eval = FALSE}
 
 par(mfrow = c(1,2))
 plot(M_HER2_vs_NBS, -log10(pv_HER2_NBS), main = "HER2 vs NBS", pch = 16, cex = 0.7, xlab = "M", ylab = "-log10(p.value)", ylim = c(0,10))
@@ -289,7 +288,8 @@ abline (v = c(-1,1), lty = 2, lwd = 2, col = "blue")
 > **Question 4.3** : Enfin, représentez à l’aide de la fonction pheatmap une représentation des mesures d’expression (contenue dans la matrice X) uniquement pour les transcrits différentiellement exprimés, et dont la légende contient les informations contenues dans le fichier d'annotations. Utilisez l'option `scale='row'`
 . Interprétez la figure.
 
-```{r Q4.3 heatmap}
+```{r Q4.3 heatmap, echo = FALSE, eval = FALSE}
+library(pheatmap)
 idxHER2 = which(annot$condition == "HER2")
 idxNBS  = which(annot$condition == "NBS")
 idx = intersect( which(p.adj_HER2_NBS  <= 0.05), which(abs(M_HER2_vs_NBS)  >= 1) )
