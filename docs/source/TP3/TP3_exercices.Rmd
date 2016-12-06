@@ -33,7 +33,7 @@ Lors du TP précedent, vous aviez utilisé une matrice de comptages bruts, que v
 
 > **Question 1.1** : Chargez en mémoire la table de comptages créée lors du TP2 (fichier `counts_normalized.txt`). Quelle est la classe de l'objet créé ? Transformez le en matrice. Chargez en mémoire le fichier de description des échantillons (fichier `annot_sample.txt`).
 
-```{r Q1.1 input data file , eval = TRUE, echo = FALSE}
+```{r Q1.1 input data file , eval = FALSE, echo = FALSE}
 count = read.delim("data_TP3/counts_normalized.txt", sep="\t", row.names = 1)
 count = as.matrix(count)
 annot = read.delim("data_TP3/annot_sample.txt")
@@ -79,7 +79,7 @@ Le MA-plot est le graphique qui affiche la valeur **M** en ordonnée et la valeu
 
 > Cette fonction retourne un vecteur contenant les moyennes d'expression pour l'ensemble des gènes de la matrice de comptage, pour le groupe d'échantillons donné. Cette fonction vous servira pour la majorité des questions de ce TP.
 
-```{r Q2.1 computeMean, eval = TRUE, echo = FALSE}
+```{r Q2.1 computeMean, eval = FALSE, echo = FALSE}
 computeMean = function( condition, count, label.grp){
   idx = which( condition == label.grp)
   if (length(idx) > 0){
@@ -108,7 +108,7 @@ computeMean = function( condition, count, label.grp){
 > - Interpretez ces figures. 
 > - Que représentent les gènes situés au dessus de la ligne y = 1 ? Que représentent les gènes situés au dessous de la ligne y = -1 ?
 
-```{r Q2.2 MA-plots, echo = FALSE, eval = TRUE}
+```{r Q2.2 MA-plots, echo = FALSE, eval = FALSE}
 m_nbs   = computeMean(annot$condition, count, "NBS")
 m_her2  = computeMean(annot$condition, count, "HER2")
 m_tnbc  = computeMean(annot$condition, count, "TNBC")
@@ -149,7 +149,7 @@ A partir du calcul de la p-value, la conclusion d’un test d’hypothèses se d
 > Transformez la matrice `count` en `countLog2`. Calculez, pour tous les gènes (ie les lignes de `countLog2`), les p-values d’un test de Student comparant les deux moyennes des groupes HER2 et NBS en utilisant la fonction t.test et ses paramètres par défaut. Combien de ces p-values sont-elles en dessous du seuil classique de 0.05 ?
 
 
-```{r Q3.1 t-test HER2_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.1 t-test HER2_NBS, echo = FALSE, eval = FALSE}
 
 countLog2 = log2(count)
 idxHER2 = which(annot$condition == "HER2")
@@ -172,14 +172,14 @@ Une correction pour les tests multiples est donc nécessaire. La procédure la p
 
 > Utilisez sur le vecteur des p-values calculées précédemment la procédure `p.adjust` en attribuant à l’argument `method` la valeur "BH". Après correction, combien de p-values ajustées se trouvent en dessous du seuil de 0.05 ?
 
-```{r Q3.2 correction test multiple, echo = FALSE, eval = TRUE}
+```{r Q3.2 correction test multiple, echo = FALSE, eval = FALSE}
 p.adjHER2 = p.adjust(pvHER2, method = "BH")
 length(which(p.adjHER2 <= 0.05))
 ```
 
 > **Question 3.3** : Répétez les questions 3.1 et 3.2 pour les contrastes "TNBC vs NBS", et "Non-TNBC vs NBS"
 
-```{r Q3.3 t-test TNBC_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.3 t-test TNBC_NBS, echo = FALSE, eval = FALSE}
 
 idxTNBC = which(annot$condition == "TNBC")
 idxNBS  = which(annot$condition == "NBS")
@@ -196,7 +196,7 @@ p.adjTNBC = p.adjust(pvTNBC, method = "BH")
 length(which(p.adjTNBC <= 0.05))
 ```
 
-```{r Q3.3 t-test Non-TNBC_NBS, echo = FALSE, eval = TRUE}
+```{r Q3.3 t-test Non-TNBC_NBS, echo = FALSE, eval = FALSE}
 
 idxNTNBC = which(annot$condition == "Non-TNBC")
 idxNBS  = which(annot$condition == "NBS")
@@ -226,7 +226,7 @@ Une liste de gènes différentiellement exprimés est caractérisée par deux se
 > * Non-TNBC versus NBS
 > * HER2 vesus NBS
 
-```{r Q4.1, echo = FALSE, eval = TRUE}
+```{r Q4.1, echo = FALSE, eval = FALSE}
 
 length(intersect( which(p.adjHER2  <= 0.05), which(abs(M_HER2_vs_NBS)  >= 1) ))
 
@@ -239,7 +239,7 @@ length(intersect( which(p.adjNTNBC <= 0.05), which(abs(M_NTNBC_vs_NBS) >= 1) ))
 
 > Une première représentation graphique permettant de synthétiser ce résultat est une représentation dite en volcan : il s’agit de représenter, pour toutes les gènes, un graphe bivarié, avec en abscisse le logFC et en ordonnée -log10(p-value ajustée) (ou -log10(p.value)). Faites une représentation en volcan de votre analyse différentielle HER2 vs NBS (avec la fonction plot). Représentez sur ce graphe les seuils sur le logFC et la p-value ajustée ou non ajustée (avec la fonction `abline`). Représentez de deux couleurs différentes les gènes sur- et sous-exprimées (avec l’argument `col` de la fonction `plot`). Fixer l'échelle des ordonnées à `ylim=c(0,10)`. Représentez sur la même fenêtre graphique un volcano plot avec les p-values non ajustées et un avec les p-values ajustées.  Commentez.
 
-```{r Q4.2 volcano-plot, echo = FALSE, eval = TRUE}
+```{r Q4.2 volcano-plot, echo = FALSE, eval = FALSE}
 
 par(mfrow = c(1,2))
 plot(M_HER2_vs_NBS, -log10(pvHER2), 
@@ -273,7 +273,7 @@ abline (v = c(-1,1), lty = 2, lwd = 2, col = "blue")
 
 > **Question 4.3** : Enfin, représentez à l’aide de la fonction `pheatmap` une représentation des mesures d’expression des conditions HER2 et NBS (contenues dans la matrice `countLog2`) uniquement pour les gènes différentiellement exprimés pour ce contraste, et dont la légende contient les informations contenues dans le fichier d'annotations. Utilisez l'option `scale='row'`. Interprétez la figure.
 
-```{r Q4.3 heatmap, echo = FALSE, eval = TRUE}
+```{r Q4.3 heatmap, echo = FALSE, eval = FALSE, warning = FALSE}
 library(pheatmap)
 idxHER2 = which(annot$condition == "HER2")
 idxNBS  = which(annot$condition == "NBS")
