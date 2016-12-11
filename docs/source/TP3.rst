@@ -9,6 +9,6 @@ Pour cela, de nombreux packages existent dans Bioconductor : `DESeq2 <http://bio
 
 Dans ce TP, nous illustrerons la démarche de l'analyse différentielle sans s'attacher à l'un de ces outils.
 
-* Rappel de données, introduction à l'analyse différentielle :   :download:`slides  <TP3/TP3.pptx>`
-* Exercices :   :download:`exercices  <TP3/TP3_exercides.pdf>`
+* Rappel de données, introduction à l'analyse différentielle :   :download:`slides  <TP3/TP3_20161208.pptx>`
+* Exercices :   :download:`exercices  <TP3/TP3_exercices.pdf>`
 * Données à télécharger :  :download:`data_TP3.zip <TP3/data_TP3.zip>` 
