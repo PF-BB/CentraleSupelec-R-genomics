@@ -1,0 +1,33 @@
+--- 
+title: "TP3 Analyse differentielle" 
+author: 
+- Justine Guégan - j.guegan-ihu@icm-institute.org 
+- Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
+date: "08 décembre 2016" 
+output: pdf_document 
+header- includes: 
+- \usepackage{nicefrac} 
+- \usepackage{graphicx} 
+- \newcommand{\cor}{cor} 
+---
+
+Les données nécessaires à cette séance se trouvent sur le site web :
+
+https://pf-bb.github.io/CentraleSupelec-R-genomics/TP3.html.
+
+# Objectif
+
+L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. Il s'agit ici de mener une analyse différentielle des données de séquencage. Cette analyse différentielle permettra de mettre en évidence quels gènes sont différentiellement exprimés entre les différents sous-type de cancer du sein, et le tissu normal.
+
+Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
+
+# Données
+
+Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2), triple négatif (TNBC), non triple négatif (Non-TNBC), et 3 échantillons de sein normal (NBS) ont été séquencés par Illumina HiSeq2000. 
+
+# Analyse des données
+
+Lors du TP précedent, vous aviez utilisé une matrice de comptages bruts, que vous aviez nettoyée afin de supprimer les gènes qui ne s'expriment dans aucun échantillon. Nous vous proposons de reprendre les analyses à ce stade. 
+
+**1. Lecture des fichiers de données**
+
