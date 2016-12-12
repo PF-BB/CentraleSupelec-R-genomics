@@ -13,11 +13,14 @@ header- includes:
 
 Les données nécessaires à cette séance se trouvent sur le site web :
 
-https://pf-bb.github.io/CentraleSupelec-R-genomics/TP3.html.
+https://pf-bb.github.io/CentraleSupelec-R-genomics/TP4.html.
 
 # Objectif
 
-L'objectif du TP est d'étudier la modulation de l'expression des gènes entre des échantillons de cancer du sein et des échantillons non tumoraux. Pour cela, des expériences de RNA-seq ont été réalisées. Il s'agit ici de mener une analyse différentielle des données de séquencage. Cette analyse différentielle permettra de mettre en évidence quels gènes sont différentiellement exprimés entre les différents sous-type de cancer du sein, et le tissu normal.
+Dans les TP2 et 3, nous avons appris à manipuler des données d'expressions, à évaluer la variabilité de profils transcritpionnels, 
+et à rechercher des gènes différentiellement exprimés entre deux groupes d'echantillons. Aujourd'hui, nous nous pencherons
+sur l'analyse fonctionnelle de ces gènes : quels sont les mécanismes biologiques sous jascent, si tant est que nous puissions les 
+identifier ?
 
 Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
 
@@ -27,7 +30,78 @@ Les ARNm de 17 échantillons de tumeurs du sein de 3 types, HER2 positif (HER2),
 
 # Analyse des données
 
-Lors du TP précedent, vous aviez utilisé une matrice de comptages bruts, que vous aviez nettoyée afin de supprimer les gènes qui ne s'expriment dans aucun échantillon. Nous vous proposons de reprendre les analyses à ce stade. 
+Lors du TP précedent, vous aviez généré les MA-plot, des volcanoplots et des heatmap permettant de représenter les gènes différentiellements 
+exprimés entre deux groupes d'échantillons. Afin de repartir sur la même base, nous vous donnons aujourd'hui les fichiers suivant : 
 
-**1. Lecture des fichiers de données**
+* Fichiers MA-plot : ces fichiers contiennent en ligne les gènes, et en colonnes, les valeurs **M**, **A**, ainsi que les p.value et p.value ajustée. 
+
+>* dataMAplot_HER2_vs_NBS.txt
+>* dataMAplot_TNBC_vs_NBS.txt
+>* dataMAplot_NTNBC_vs_NBS.txt
+
+* Fichiers heatmap : ces fichiers contiennent un sous ensemble de la matrice de comptage, réduit aux seuls gènes différentiellement exprimés pour les 3 contrates (seuils utilisés : abs(logFC) > 1 et p.value ajustée <= 0.05) 
+
+>* count_HER2_vs_NBS
+>* count_TNBC_vs_NBS
+>* count_NTNBC_vs_NBS
+
+* Fichiers de liste de gènes : ces fichiers contiennent simplement la liste des gènes sur- et sous-exprimés dans les 3 contrastes : 
+
+>* gene_list_HER2_vs_NBS_up.txt
+>* gene_list_HER2_vs_NBS_dn.txt
+>* gene_list_TNBC_vs_NBS_up.txt
+>* gene_list_TNBC_vs_NBS_dn.txt
+>* gene_list_NTNBC_vs_NBS_up.txt
+>* gene_list_NTNBC_vs_NBS_dn.txt
+
+note : pour répondre aux questions de ce TP, il faudra charger ces fichiers dans R. Pour cela, n'oubliez pas les options `header = TRUE`, 
+`row.names = 1` et `sep = "\t"`
+
+**1. Un peu de Biologie **
+
+> **Question 1.1**:  Trouvez une brève définition des 3 sous types de cancer.
+
+```{r Q1.1 Definition, eval = FALSE, echo = FALSE}
+# HER2
+# Le récepteur HER2 fait partie de la famille des récepteurs EGFR (pour Epithelial Growth Factor Receptor). L’Epithelial Growth Factor est 
+# impliqué dans la régulation de la prolifération et de la survie des cellules et, en particulier, des cellules cancéreuses.
+# les scientifiques ont démontré que l’hyperactivité de ce gène HER2 était liée à une forme plus agressive de cancer du sein.
+
+
+# TNBC : Triple Negative Breast cancer.
+# Il s'agit d'une catégorie de cancer du sein n'exprimant pas les recepteurs aux progesterones (PR), aux estrogenes (ER), ni le recepteur HER2.
+# Le developpement de ce type de tumeur ne depend pas des hormones de type estrogene ou progesterone, ni par les facteurs de croissance associés à HER2.  ce type de tumeur ne répond pas aux therapies hormonales, et nécessitent d'autres stratégies.
+
+# NTNBC : Non TNBC : sous type de cancer du sein n'etant pas positif pour l'expression des gènes HER2, ER et PR
+```
+
+
+
+> **Question 1.2**:  Identifiez une liste de gènes caractéristiques de ces 3 sous types.
+
+```{r Q1.2 cancer_gene_list, eval = TRUE}
+breast_cancer_gene = matrix(ncol = 3, nrow = 4)
+colnames(breast_cancer_gene) = c("HER2", "TNBC", "NTNBC")
+rownames(breast_cancer_gene) = c("ESR1", "ESR2", "PGR", "ERBB2")
+breast_cancer_gene[,1] = c(0,0,0,1)
+breast_cancer_gene[,2] = c(1,1,1,0)
+breast_cancer_gene[,3] = c(0,0,0,0)
+```
+
+> **Question 1.3**:  Les mesures d'expression de ces gènes est elle cohérentes avec ce que l'on pourrait attendre ? 
+
+```{r Q1.3 Profil d'expression}
+
+```
+
+
+** 2 Analyse fonctionnelle **
+
+Dans cette partie, on se propose d'explorer les listes de gènes
+
+** Question 2.1 ** 
+
+
+
+
 
