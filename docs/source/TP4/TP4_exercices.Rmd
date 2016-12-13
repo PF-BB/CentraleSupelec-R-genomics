@@ -1,5 +1,5 @@
 --- 
-title: "TP3 Analyse differentielle" 
+title: "TP4 Analyse Fonctionnelle" 
 author: 
 - Justine Guégan - j.guegan-ihu@icm-institute.org 
 - Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
@@ -32,15 +32,6 @@ Lors du TP précedent, vous aviez généré des MA-plots, des volcanoplots et de
 
 * Fichier des comptages normalisés : counts_normalized.txt
 * Fichier d'annotation des échantillons : annot_sample.txt
-* Fichiers de liste de gènes : ces fichiers contiennent simplement la liste des gènes sur- et sous-exprimés pour les 3 contrastes : 
-
->* gene_list_HER2_vs_NBS_up.txt
->* gene_list_HER2_vs_NBS_dn.txt
->* gene_list_TNBC_vs_NBS_up.txt
->* gene_list_TNBC_vs_NBS_dn.txt
->* gene_list_NTNBC_vs_NBS_up.txt
->* gene_list_NTNBC_vs_NBS_dn.txt
-
 * Fichiers MA-plot : ces fichiers contiennent en ligne les gènes, et en colonnes, les valeurs **M**, **A**, ainsi que les p.values et p.values ajustées. 
 
 >* dataMAplot_HER2_vs_NBS.txt
@@ -48,6 +39,8 @@ Lors du TP précedent, vous aviez généré des MA-plots, des volcanoplots et de
 >* dataMAplot_NTNBC_vs_NBS.txt
 
 note : pour répondre aux questions de ce TP, il faudra charger ces fichiers dans R. Pour cela, n'oubliez pas les options `header = TRUE`, `row.names = 1` et `sep = "\t"`.
+
+\newpage
 
 **1. Un peu de Biologie **
 
@@ -76,7 +69,7 @@ Créez un graphique par gène avec en abscisse les 4 conditions et en ordonnée 
 Cela vous parait-il cohérent avec ce que l'on pourrait attendre ? 
 Que pensez vous de l'hétérogénéité entre les patients au sein d'un même sous groupe ?
 
-```{r Q1.2 Profil_expression, eval = TRUE, echo = FALSE}
+```{r Q1.2 Profil_expression, eval = FALSE, echo = FALSE, fig.height=6}
 annot  = read.table("data_TP4/annot_sample.txt", sep="\t", header=TRUE)
 counts = read.table("data_TP4/counts_normalized.txt", sep="\t", header=T, row.names=1)
 idxERBB2 = which(rownames(counts) == "ERBB2")
@@ -159,14 +152,16 @@ abline(v=0, h=0, lty=2)
 
 \includegraphics[width=\textwidth]{ACP_cluster.png}
 
+\newpage 
+
 **2 Analyse fonctionnelle : sur-représentation de catégories fonctionnelles**
 
 > **Question 2.1**: Test de Fisher et table de contingence. 
 
 |   |ERBB | Not in ERBB| TOTAL|
 |---|----|----|----|
-|In my gene liste | n~o~| n-n~o~| n |
-|Not in my gene liste|N~o~-n~o~  |N-n-N~o~+n~o~ |N-n |
+|In my gene list | n~o~| n-n~o~| n |
+|Not in my gene list|N~o~-n~o~  |N-n-N~o~+n~o~ |N-n |
 |TOTAL|N~o~|N-N~o~|N|
 
 > Avec :
@@ -182,7 +177,7 @@ abline(v=0, h=0, lty=2)
 > En vous appuyant sur le code suivant, construisez la table de contingence et calculez la p.value issue du test de Fisher (fonction `fisher.test`). Concluez.
 
 
-```{r Q2.1 Table de contingence, echo=TRUE, eval = TRUE}
+```{r Q2.1 Table de contingence, echo=TRUE, eval = FALSE}
 ### chargement de la liste de gene de la voie de signalisatin de ERBB2
 erbb = read.delim("data_TP4/ERBB.txt", header = TRUE)
 erbb = as.vector(erbb$GeneID)
@@ -197,7 +192,7 @@ her2_vs_nbs_gene = rownames(updown)[IDX]
 inter = intersect(erbb, her2_vs_nbs_gene)
 ```
 
-```{r Q2.1 Fisher, echo = FALSE, eval = TRUE}
+```{r Q2.1 Fisher, echo = FALSE, eval = FALSE}
 ### Taille de la liste 
 No = length(erbb)
 
@@ -218,13 +213,14 @@ fisher.test(contingence)
 Nous vous proposons à présent de réaliser la même démarche, à une plus grande échelle : rassurez-vous, de nombreuses applications web existent pour cela. Nous allons, dans ce TP, utiliser ToppGene.
 
 > **Question 2.2** : Réalisez une analyse de sur-représentation de catégories fonctionnelles pour les gènes significativement différentiellement sur- et sous-exprimés au seuil de logFC de 1 pour le sous type HER2.
+
 > * Commencez par ouvrir le fichier `dataMAplot_HER2_vs_NBS.txt` dans Excel.
 > * Selectionnez la liste des gènes sur et sous-exprimés en utilisant un seuil de `logFC > 1 ou <= -1` et une `p.value ajustée <= 0.01`.
 > * En utilisant l’outil ToppFun (https://toppgene.cchmc.org/enrichment.jsp), choississez les identifiants HGNC Symbol (*Entry type*) et copiez/collez votre liste de gènes d'interêt, puis lancez l'analyse. L'application vous indique alors le nombre de symbols retrouvés dans sa propre base de connaissance. Dans le tableau listant les bases de données à interroger, sélectionnez : 
 
->* GO:Biological Process
->* Pathway : BioSystems : KEGG
->* Disease
+>    * GO:Biological Process
+>    * Pathway : BioSystems : KEGG
+>    * Disease
 
 > Vous pouvez laisser les options de calcul par défaut (mode de correction FDR, cutoff de la p.value à 0.05).
 
@@ -249,7 +245,7 @@ note : pour comprendre en détail le fonctionnement de ce package, vous pouvez v
 
 > **Question 3.1** : Quelles sont les gènes différentiellement exprimés au seuil de p.values ajustées de 1% et au seuil de valeur absolue de logFC de 1 ? Construisez une matrice d'une colonne contenant ces logFC. Les noms de lignes de cette matrice seront les noms des gènes.
 
-```{r Q3.1 selection_gene, eval = TRUE, echo = FALSE}
+```{r Q3.1 selection_gene, eval = FALSE, echo = FALSE}
 updown = read.table("data_TP4/dataMAplot_HER2_vs_NBS.txt", sep="\t", header=TRUE, row.names=1)
 IDX = intersect(which(updown$Adj.p.value < 0.01), which(abs(updown$M) > 1))
 genes = as.matrix(updown[IDX, "M"])
