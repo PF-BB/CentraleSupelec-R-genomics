@@ -3,7 +3,8 @@ title: "TP3 Analyse differentielle"
 author: 
 - Justine Guégan - j.guegan-ihu@icm-institute.org 
 - Guillaume Meurice - guillaume.meurice@gustaveroussy.fr 
-date: "08 décembre 2016" 
+- Marie-Anne Debily - marie-anne.debily@gustaveroussy.fr
+date: "15 décembre 2016" 
 output: pdf_document 
 header- includes: 
 - \usepackage{nicefrac} 
@@ -17,7 +18,7 @@ https://pf-bb.github.io/CentraleSupelec-R-genomics/TP4.html.
 
 # Objectif
 
-Dans les TP2 et 3, nous avons appris à manipuler des données d'expression, à évaluer la variabilité de profils transcriptionnels, et à rechercher des gènes différentiellement exprimés entre deux groupes d'échantillons. Aujourd'hui, nous nous pencherons sur l'analyse fonctionnelle de ces gènes : quels sont les mécanismes biologiques sous-jascent, si tant est que nous puissions les identifier ?
+Dans les TP2 et 3, vous avez appris à manipuler des données d'expression, à évaluer la variabilité de profils transcriptionnels, et à rechercher des gènes différentiellement exprimés entre deux groupes d'échantillons. Aujourd'hui, nous vous proposons de vous pencher sur l'analyse fonctionnelle de ces gènes : quels sont les mécanismes biologiques sous-jascent, si tant est que nous puissions les identifier ?
 
 Répondez aux questions dans un document Rmarkdown produisant un fichier **PDF** ou **HTML**.
 
