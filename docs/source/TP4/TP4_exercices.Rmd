@@ -112,9 +112,9 @@ axis(1, labels= annot$condition, at= annot$condition )
 > * Selectionnez la liste des gènes sur et sous-exprimés en utilisant un seuil de `logFC > 1 ou <= -1` et une `p.value ajustée <= 0.01`.
 > * En utilisant l’outil ToppFun (https://toppgene.cchmc.org/enrichment.jsp), choississez les identifiants HGNC Symbol (*Entry type*) et copiez/collez votre liste de gènes d'interêt, puis lancez l'analyse. L'application vous indique alors le nombre de symbols retrouvés dans sa propre base de connaissance. Dans le tableau listant les bases de données à interroger, sélectionnez : 
 
-* GO:Biological Process
-* Pathway : BioSystems : KEGG
-* Disease
+>* GO:Biological Process
+>* Pathway : BioSystems : KEGG
+>* Disease
 
 > Vous pouvez laisser les options de calcul par défaut (mode de correction FDR, cutoff de la p.value à 0.05).
 
@@ -153,7 +153,7 @@ rownames(genes) = rownames(updown)[IDX]
 >* hsa04012 : ERBB signaling pathway
 >* hsa05200 : Pathway in cancer
 
-```{r Q3.2 pathway, eval = FALSE}
+```{r Q3.2 pathway, eval = FALSE, echo = FALSE}
 library(pathview)
 pathview(genes, pathway.id = "hsa05224", gene.idtype = "SYMBOL")
 pathview(genes, pathway.id = "hsa04012", gene.idtype = "SYMBOL")
